@@ -4,7 +4,7 @@
 //
 //  Created by Massimo Moro on 25/10/13.
 //  Copyright (c) 2013 Casinò di Venezia SPA. All rights reserved.
-// Test
+// Test 2
 
 #import "Reachability.h"
 #import "CMVAppDelegate.h"

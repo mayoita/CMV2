@@ -1,6 +1,11 @@
 
-// Use Parse.Cloud.define to define as many cloud functions as you want.
-// For example:
-Parse.Cloud.define("hello", function(request, response) {
-  response.success("Hello world!");
+// Make sure all installations point to the current user.
+Parse.Cloud.beforeSave(Parse.Installation, function(request, response) {
+  Parse.Cloud.useMasterKey();
+  if (request.user) {
+    request.object.set('user', request.user);
+  } else {
+    request.object.unset('user');
+  }
+  response.success();
 });

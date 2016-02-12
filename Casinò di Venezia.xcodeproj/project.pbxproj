@@ -66,6 +66,7 @@
 		2230D884181FE1280060C568 /* inner-shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 2230D883181FE1280060C568 /* inner-shadow.png */; };
 		2230D89618225C560060C568 /* CMVCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2230D89518225C560060C568 /* CMVCellView.xib */; };
 		2230D8981822600B0060C568 /* CustomCellCasinoDiVenezia.png in Resources */ = {isa = PBXBuildFile; fileRef = 2230D8971822600B0060C568 /* CustomCellCasinoDiVenezia.png */; };
+		22340B281C6E1F10002D536E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 22340B271C6E1F10002D536E /* Default-568h@2x.png */; };
 		223BF2CF18FFCCBA009A1B73 /* CMVBusTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 223BF2CE18FFCCBA009A1B73 /* CMVBusTime.m */; };
 		223BF2D318FFE8EB009A1B73 /* CMVShimmerLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 223BF2D218FFE8EB009A1B73 /* CMVShimmerLabel.m */; };
 		223BF2D7190012DA009A1B73 /* CMVCellServicesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 223BF2D5190012DA009A1B73 /* CMVCellServicesTableViewCell.m */; };
@@ -499,6 +500,7 @@
 		2230D883181FE1280060C568 /* inner-shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inner-shadow.png"; sourceTree = "<group>"; };
 		2230D89518225C560060C568 /* CMVCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CMVCellView.xib; sourceTree = "<group>"; };
 		2230D8971822600B0060C568 /* CustomCellCasinoDiVenezia.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CustomCellCasinoDiVenezia.png; sourceTree = "<group>"; };
+		22340B271C6E1F10002D536E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		223BF2CD18FFCCBA009A1B73 /* CMVBusTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMVBusTime.h; sourceTree = "<group>"; };
 		223BF2CE18FFCCBA009A1B73 /* CMVBusTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMVBusTime.m; sourceTree = "<group>"; };
 		223BF2D118FFE8EB009A1B73 /* CMVShimmerLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMVShimmerLabel.h; sourceTree = "<group>"; };
@@ -1947,6 +1949,7 @@
 		22CF4450181A9AD70062FC38 = {
 			isa = PBXGroup;
 			children = (
+				22340B271C6E1F10002D536E /* Default-568h@2x.png */,
 				2242D67A1C6E015200C94889 /* Helpshift.h */,
 				22BDBFD21BBAB8C200011472 /* Launch Screen.xib */,
 				22F6322B1BB9859000C1BD5A /* speak_f.png */,
@@ -2348,6 +2351,7 @@
 				22F6322E1BB9859000C1BD5A /* speak.png in Resources */,
 				22F6322A1BB97C7900C1BD5A /* Test.png in Resources */,
 				22B971731A56A28F000F2654 /* Main_iPhone.strings in Resources */,
+				22340B281C6E1F10002D536E /* Default-568h@2x.png in Resources */,
 				22B9717F1A56A387000F2654 /* Main_iPhone.storyboard in Resources */,
 				226FEB311AA5D996006B6998 /* 22789.otf in Resources */,
 				22B971551A569BC6000F2654 /* GameDBase.plist in Resources */,

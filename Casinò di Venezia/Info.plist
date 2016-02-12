@@ -97,7 +97,7 @@
 		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
-	<string>HomeScreen</string>
+	<string>Launch Screen</string>
 	<key>UIMainStoryboardFile~ipad</key>
 	<string>Main_iPad</string>
 	<key>UIMainStoryboardFile~iphone</key>

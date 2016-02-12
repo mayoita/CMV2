@@ -53,7 +53,6 @@
     [label3 setTransform:CGAffineTransformMakeRotation(M_PI / 2)];
     label3.center=CGPointMake(45, self.view.center.y);
     [self.view addSubview:label3];
-
 }
 
 - (void)didReceiveMemoryWarning {

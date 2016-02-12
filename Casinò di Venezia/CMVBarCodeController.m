@@ -42,6 +42,18 @@
     [label2 setTransform:CGAffineTransformMakeRotation(M_PI / 2)];
     label2.center=CGPointMake(self.view.frame.size.width- 35, self.view.center.y);
     [self.view addSubview:label2];
+    
+    UILabel* label3 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.height-120, 50.0)];
+    [label3 setText:@"WFB519--2S10936"];
+    label3.font=GOTHAM_Medium(20);
+    label3.textAlignment=NSTextAlignmentCenter;
+    label3.minimumScaleFactor=5;
+    label3.adjustsFontSizeToFitWidth=YES;
+    label3.numberOfLines=0;
+    [label3 setTransform:CGAffineTransformMakeRotation(M_PI / 2)];
+    label3.center=CGPointMake(45, self.view.center.y);
+    [self.view addSubview:label3];
+
 }
 
 - (void)didReceiveMemoryWarning {

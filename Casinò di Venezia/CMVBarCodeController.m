@@ -44,7 +44,6 @@
     [self.view addSubview:label2];
     
     UILabel* label3 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.height-120, 50.0)];
-    
     [label3 setText:@"WFB519--2S10936"];
     label3.font=GOTHAM_Medium(20);
     label3.textAlignment=NSTextAlignmentCenter;

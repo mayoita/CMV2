@@ -339,6 +339,21 @@
 		22D9DBE119DC31DC005AB952 /* CMVPokerCellBackgroundGrey.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D9DBE019DC31DC005AB952 /* CMVPokerCellBackgroundGrey.m */; };
 		22D9DBE319DD6109005AB952 /* PokerHourCellNewiPAD.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22D9DBE219DD6109005AB952 /* PokerHourCellNewiPAD.xib */; };
 		22D9DBE519DD778A005AB952 /* TournamentCellNewiPAD.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22D9DBE419DD778A005AB952 /* TournamentCellNewiPAD.xib */; };
+		22DA54181C7DC4C40075B06F /* AWSMobileClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DA54171C7DC4C40075B06F /* AWSMobileClient.m */; };
+		22DA541F1C7DC5660075B06F /* AWSDynamoDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22DA54191C7DC5660075B06F /* AWSDynamoDB.framework */; };
+		22DA54201C7DC5660075B06F /* AWSCognito.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22DA541A1C7DC5660075B06F /* AWSCognito.framework */; };
+		22DA54211C7DC5660075B06F /* AWSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22DA541B1C7DC5660075B06F /* AWSCore.framework */; };
+		22DA54221C7DC5660075B06F /* AWSLambda.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22DA541C1C7DC5660075B06F /* AWSLambda.framework */; };
+		22DA54231C7DC5660075B06F /* AWSMobileAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22DA541D1C7DC5660075B06F /* AWSMobileAnalytics.framework */; };
+		22DA54241C7DC5660075B06F /* AWSS3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22DA541E1C7DC5660075B06F /* AWSS3.framework */; };
+		22DA54271C7DC57A0075B06F /* GoogleSignIn.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 22DA54251C7DC57A0075B06F /* GoogleSignIn.bundle */; };
+		22DA54281C7DC57A0075B06F /* GoogleSignIn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22DA54261C7DC57A0075B06F /* GoogleSignIn.framework */; };
+		22DA542C1C7DC5CC0075B06F /* AWSIdentityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DA542B1C7DC5CC0075B06F /* AWSIdentityManager.m */; };
+		22DA54311C7DC5F20075B06F /* AWSFacebookSignInProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DA542F1C7DC5F20075B06F /* AWSFacebookSignInProvider.m */; };
+		22DA54351C7DC60A0075B06F /* AWSTask+CheckExceptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DA54341C7DC60A0075B06F /* AWSTask+CheckExceptions.m */; };
+		22DA54391C7DC6230075B06F /* AWSCloudLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DA54381C7DC6230075B06F /* AWSCloudLogic.m */; };
+		22DA543C1C7DC88C0075B06F /* Events.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DA543B1C7DC88C0075B06F /* Events.m */; };
+		22DA543E1C7DE8780075B06F /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22DA543D1C7DE8780075B06F /* StoreKit.framework */; };
 		22DAAD301899596500435B50 /* CMVAllEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DAAD2F1899596500435B50 /* CMVAllEvents.m */; };
 		22DAAD33189FE62F00435B50 /* CMVREstaurantViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DAAD32189FE62F00435B50 /* CMVREstaurantViewController.m */; };
 		22DAAD35189FE77F00435B50 /* Restaurant.plist in Resources */ = {isa = PBXBuildFile; fileRef = 22DAAD34189FE77F00435B50 /* Restaurant.plist */; };
@@ -1062,6 +1077,29 @@
 		22D9DBE019DC31DC005AB952 /* CMVPokerCellBackgroundGrey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMVPokerCellBackgroundGrey.m; sourceTree = "<group>"; };
 		22D9DBE219DD6109005AB952 /* PokerHourCellNewiPAD.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PokerHourCellNewiPAD.xib; sourceTree = "<group>"; };
 		22D9DBE419DD778A005AB952 /* TournamentCellNewiPAD.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TournamentCellNewiPAD.xib; sourceTree = "<group>"; };
+		22DA54151C7DC4C40075B06F /* AWSConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSConfiguration.h; sourceTree = "<group>"; };
+		22DA54161C7DC4C40075B06F /* AWSMobileClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSMobileClient.h; sourceTree = "<group>"; };
+		22DA54171C7DC4C40075B06F /* AWSMobileClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSMobileClient.m; sourceTree = "<group>"; };
+		22DA54191C7DC5660075B06F /* AWSDynamoDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSDynamoDB.framework; sourceTree = "<group>"; };
+		22DA541A1C7DC5660075B06F /* AWSCognito.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSCognito.framework; sourceTree = "<group>"; };
+		22DA541B1C7DC5660075B06F /* AWSCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSCore.framework; sourceTree = "<group>"; };
+		22DA541C1C7DC5660075B06F /* AWSLambda.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSLambda.framework; sourceTree = "<group>"; };
+		22DA541D1C7DC5660075B06F /* AWSMobileAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSMobileAnalytics.framework; sourceTree = "<group>"; };
+		22DA541E1C7DC5660075B06F /* AWSS3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSS3.framework; sourceTree = "<group>"; };
+		22DA54251C7DC57A0075B06F /* GoogleSignIn.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GoogleSignIn.bundle; sourceTree = "<group>"; };
+		22DA54261C7DC57A0075B06F /* GoogleSignIn.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleSignIn.framework; sourceTree = "<group>"; };
+		22DA542A1C7DC5CC0075B06F /* AWSIdentityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSIdentityManager.h; sourceTree = "<group>"; };
+		22DA542B1C7DC5CC0075B06F /* AWSIdentityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSIdentityManager.m; sourceTree = "<group>"; };
+		22DA542E1C7DC5F20075B06F /* AWSFacebookSignInProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSFacebookSignInProvider.h; sourceTree = "<group>"; };
+		22DA542F1C7DC5F20075B06F /* AWSFacebookSignInProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSFacebookSignInProvider.m; sourceTree = "<group>"; };
+		22DA54301C7DC5F20075B06F /* AWSSignInProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSSignInProvider.h; sourceTree = "<group>"; };
+		22DA54331C7DC60A0075B06F /* AWSTask+CheckExceptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AWSTask+CheckExceptions.h"; sourceTree = "<group>"; };
+		22DA54341C7DC60A0075B06F /* AWSTask+CheckExceptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AWSTask+CheckExceptions.m"; sourceTree = "<group>"; };
+		22DA54371C7DC6230075B06F /* AWSCloudLogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCloudLogic.h; sourceTree = "<group>"; };
+		22DA54381C7DC6230075B06F /* AWSCloudLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSCloudLogic.m; sourceTree = "<group>"; };
+		22DA543A1C7DC88C0075B06F /* Events.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Events.h; sourceTree = "<group>"; };
+		22DA543B1C7DC88C0075B06F /* Events.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Events.m; sourceTree = "<group>"; };
+		22DA543D1C7DE8780075B06F /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		22DAAD2E1899596500435B50 /* CMVAllEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMVAllEvents.h; sourceTree = "<group>"; };
 		22DAAD2F1899596500435B50 /* CMVAllEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMVAllEvents.m; sourceTree = "<group>"; };
 		22DAAD31189FE62F00435B50 /* CMVREstaurantViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMVREstaurantViewController.h; sourceTree = "<group>"; };
@@ -1157,12 +1195,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22DA543E1C7DE8780075B06F /* StoreKit.framework in Frameworks */,
 				2242D67C1C6E01CC00C94889 /* libSupport.a in Frameworks */,
 				2242D6791C6E00A100C94889 /* CoreSpotlight.framework in Frameworks */,
 				22F727661876E62A00CB57D4 /* MobileCoreServices.framework in Frameworks */,
+				22DA54221C7DC5660075B06F /* AWSLambda.framework in Frameworks */,
 				22F631BE1BB5774100C1BD5A /* libGoogleAnalyticsServices.a in Frameworks */,
 				226032C71B2F7D880003E72B /* libstdc++.6.0.9.dylib in Frameworks */,
 				22097790192B5E19004026BD /* CoreData.framework in Frameworks */,
+				22DA54281C7DC57A0075B06F /* GoogleSignIn.framework in Frameworks */,
 				22B544DC1852195800986E18 /* Social.framework in Frameworks */,
 				2296409E1B2766E800D2DFBF /* ParseUI.framework in Frameworks */,
 				22752D731861A05400385D04 /* SystemConfiguration.framework in Frameworks */,
@@ -1174,16 +1215,21 @@
 				22F631A01BB5587100C1BD5A /* FBSDKShareKit.framework in Frameworks */,
 				2296409A1B2766D100D2DFBF /* Bolts.framework in Frameworks */,
 				22F631AD1BB55AF100C1BD5A /* ParseTwitterUtils.framework in Frameworks */,
+				22DA54201C7DC5660075B06F /* AWSCognito.framework in Frameworks */,
+				22DA54231C7DC5660075B06F /* AWSMobileAnalytics.framework in Frameworks */,
 				22F631AC1BB55AF100C1BD5A /* ParseFacebookUtilsV4.framework in Frameworks */,
 				22752D771861A07700385D04 /* libsqlite3.0.dylib in Frameworks */,
 				22752D751861A05C00385D04 /* CoreTelephony.framework in Frameworks */,
 				22752D711861A04700385D04 /* CoreText.framework in Frameworks */,
 				22A2E5D21855D02A00F5194C /* AVFoundation.framework in Frameworks */,
+				22DA541F1C7DC5660075B06F /* AWSDynamoDB.framework in Frameworks */,
 				22CCCD521850A64E0088E89F /* EventKitUI.framework in Frameworks */,
 				22CCCD501850A6470088E89F /* EventKit.framework in Frameworks */,
 				22F632041BB5820C00C1BD5A /* ParseFacebookUtils.framework in Frameworks */,
 				226032C31B2F7C930003E72B /* ParseCrashReporting.framework in Frameworks */,
 				22FA36B2184612C500D8A8C8 /* CoreLocation.framework in Frameworks */,
+				22DA54211C7DC5660075B06F /* AWSCore.framework in Frameworks */,
+				22DA54241C7DC5660075B06F /* AWSS3.framework in Frameworks */,
 				22FA36B0184612A900D8A8C8 /* MapKit.framework in Frameworks */,
 				2230D87C181FBC9E0060C568 /* libz.dylib in Frameworks */,
 				22F6319F1BB5587100C1BD5A /* FBSDKCoreKit.framework in Frameworks */,
@@ -1687,6 +1733,8 @@
 		22A3498D1844BE2300D2B543 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				22DA543A1C7DC88C0075B06F /* Events.h */,
+				22DA543B1C7DC88C0075B06F /* Events.m */,
 				2206F2091A31ED690032681D /* Category */,
 				220B4365193DFE2100A2C1A6 /* FacebookLike */,
 				22CCCD531850A6560088E89F /* EventKitClasses */,
@@ -1993,6 +2041,15 @@
 		22CF445B181A9AD70062FC38 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				22DA543D1C7DE8780075B06F /* StoreKit.framework */,
+				22DA54251C7DC57A0075B06F /* GoogleSignIn.bundle */,
+				22DA54261C7DC57A0075B06F /* GoogleSignIn.framework */,
+				22DA54191C7DC5660075B06F /* AWSDynamoDB.framework */,
+				22DA541A1C7DC5660075B06F /* AWSCognito.framework */,
+				22DA541B1C7DC5660075B06F /* AWSCore.framework */,
+				22DA541C1C7DC5660075B06F /* AWSLambda.framework */,
+				22DA541D1C7DC5660075B06F /* AWSMobileAnalytics.framework */,
+				22DA541E1C7DC5660075B06F /* AWSS3.framework */,
 				2242D67B1C6E01CC00C94889 /* libSupport.a */,
 				2242D6781C6E00A100C94889 /* CoreSpotlight.framework */,
 				22F632031BB5820C00C1BD5A /* ParseFacebookUtils.framework */,
@@ -2042,6 +2099,7 @@
 		22CF4462181A9AD70062FC38 /* Casinò di Venezia */ = {
 			isa = PBXGroup;
 			children = (
+				22DA54141C7DC4930075B06F /* AWS */,
 				22C1040B1A52EE4C002675A4 /* ExPods */,
 				22BDF16318D86B20007BC6D0 /* Localization */,
 				22A65A07185EF5AE0018FD0C /* Casinò di Venezia.entitlements */,
@@ -2134,6 +2192,57 @@
 				22D88AA519E7DBB00035D1CD /* CMVBarCodeController.m */,
 			);
 			name = BarCode;
+			sourceTree = "<group>";
+		};
+		22DA54141C7DC4930075B06F /* AWS */ = {
+			isa = PBXGroup;
+			children = (
+				22DA54361C7DC6110075B06F /* CloudLogic */,
+				22DA54321C7DC5FF0075B06F /* Utils */,
+				22DA542D1C7DC5E40075B06F /* SignIn */,
+				22DA54291C7DC5C00075B06F /* Identity */,
+				22DA54151C7DC4C40075B06F /* AWSConfiguration.h */,
+				22DA54161C7DC4C40075B06F /* AWSMobileClient.h */,
+				22DA54171C7DC4C40075B06F /* AWSMobileClient.m */,
+			);
+			name = AWS;
+			sourceTree = "<group>";
+		};
+		22DA54291C7DC5C00075B06F /* Identity */ = {
+			isa = PBXGroup;
+			children = (
+				22DA542A1C7DC5CC0075B06F /* AWSIdentityManager.h */,
+				22DA542B1C7DC5CC0075B06F /* AWSIdentityManager.m */,
+			);
+			name = Identity;
+			sourceTree = "<group>";
+		};
+		22DA542D1C7DC5E40075B06F /* SignIn */ = {
+			isa = PBXGroup;
+			children = (
+				22DA542E1C7DC5F20075B06F /* AWSFacebookSignInProvider.h */,
+				22DA542F1C7DC5F20075B06F /* AWSFacebookSignInProvider.m */,
+				22DA54301C7DC5F20075B06F /* AWSSignInProvider.h */,
+			);
+			name = SignIn;
+			sourceTree = "<group>";
+		};
+		22DA54321C7DC5FF0075B06F /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				22DA54331C7DC60A0075B06F /* AWSTask+CheckExceptions.h */,
+				22DA54341C7DC60A0075B06F /* AWSTask+CheckExceptions.m */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		22DA54361C7DC6110075B06F /* CloudLogic */ = {
+			isa = PBXGroup;
+			children = (
+				22DA54371C7DC6230075B06F /* AWSCloudLogic.h */,
+				22DA54381C7DC6230075B06F /* AWSCloudLogic.m */,
+			);
+			name = CloudLogic;
 			sourceTree = "<group>";
 		};
 		22ED9996187D493B004D9EFD /* PokerHour */ = {
@@ -2393,6 +2502,7 @@
 				22D9DBE519DD778A005AB952 /* TournamentCellNewiPAD.xib in Resources */,
 				22F4B2A119C98858003D1D26 /* BK_date_PokerHour_gradient.png in Resources */,
 				22A3499C1844CEF600D2B543 /* Venezia.gpx in Resources */,
+				22DA54271C7DC57A0075B06F /* GoogleSignIn.bundle in Resources */,
 				22C6E870191104F30025BC62 /* Localizable.strings in Resources */,
 				22BDF17D18D87DC0007BC6D0 /* slot-venezia-4.jpg in Resources */,
 				CD3228D8185BBE3200610B17 /* fairroulette_458X972.png in Resources */,
@@ -2555,11 +2665,13 @@
 				22540A40191912F50082D643 /* CMVEventKitShared.m in Sources */,
 				22A8AE4219CC81B90070A65C /* METransitionsViewController.m in Sources */,
 				2297E5B018CDD61400072806 /* CMVWeb.m in Sources */,
+				22DA543C1C7DC88C0075B06F /* Events.m in Sources */,
 				CDF4C7D3182AE70D00EF1CDF /* CMVGameViewController.m in Sources */,
 				2245BAA019F12BE9008BB317 /* CMVTimetables.m in Sources */,
 				228DE2FF19EEB02D0006A61C /* CMVMapRedButton.m in Sources */,
 				22D00E0518EC139B0047DD31 /* Reachability.m in Sources */,
 				22F6FCF419D1AC65003AB1D1 /* CMVHomeViewController.m in Sources */,
+				22DA54351C7DC60A0075B06F /* AWSTask+CheckExceptions.m in Sources */,
 				22A8AE3419CC7BF30070A65C /* ECSlidingSegue.m in Sources */,
 				22C104171A52EE89002675A4 /* MBProgressHUD.m in Sources */,
 				22A8AE3119CC7BF30070A65C /* ECPercentDrivenInteractiveTransition.m in Sources */,
@@ -2588,6 +2700,7 @@
 				CD95CE2E185E354C00879213 /* CMVArrow.m in Sources */,
 				22A69AE6184C9C5100C596D1 /* CMVStaticGameCell.m in Sources */,
 				22097795192CC966004026BD /* CMVPermissionForVPCStandingsViewController.m in Sources */,
+				22DA54311C7DC5F20075B06F /* AWSFacebookSignInProvider.m in Sources */,
 				22752D7A1861A20500385D04 /* CMVFirstTabbarItemViewController.m in Sources */,
 				22A693B01875A1830082736B /* CMVAllGamesViewController.m in Sources */,
 				229DACBA1827AA620053EB2E /* TTViewController.m in Sources */,
@@ -2673,6 +2786,7 @@
 				2292A1DA190E64FB00BD2792 /* CMVSetUpCurrency.m in Sources */,
 				2246E9C61A24D8280083D12E /* TTScrollViewWrapper.m in Sources */,
 				229CEC14185731DB009B7120 /* CMVSharedGameViewController.m in Sources */,
+				22DA54391C7DC6230075B06F /* AWSCloudLogic.m in Sources */,
 				2277E5C01934E07100CD9EAF /* CKAuthViewController.m in Sources */,
 				221FAF6E18C625B400B77952 /* CMVGreenButton.m in Sources */,
 				CD95CE3F1860FC6700879213 /* KIViewController.m in Sources */,
@@ -2694,6 +2808,7 @@
 				2277C3C819E684C700B57F25 /* CMVVPCTableBGCell.m in Sources */,
 				2292A1E4190E9B0E00BD2792 /* FBShimmeringLayer.m in Sources */,
 				229C85C819E2A96C009A58AA /* CMVLogInFieldsBG.m in Sources */,
+				22DA54181C7DC4C40075B06F /* AWSMobileClient.m in Sources */,
 				22DF1D7E18F6DD6900E533FE /* RPSlidingMenuCell.m in Sources */,
 				2297E5C218CE03FA00072806 /* CMVLocker.m in Sources */,
 				2297E5AD18CDCA1000072806 /* CMVMenuBack.m in Sources */,
@@ -2709,6 +2824,7 @@
 				226FEB2A1AA5D4B6006B6998 /* CMVDiciottoPiu.m in Sources */,
 				22A8AE3219CC7BF30070A65C /* ECSlidingAnimationController.m in Sources */,
 				2297E5C518CF23DB00072806 /* CMVSharedPropertyButton.m in Sources */,
+				22DA542C1C7DC5CC0075B06F /* AWSIdentityManager.m in Sources */,
 				22DAAD33189FE62F00435B50 /* CMVREstaurantViewController.m in Sources */,
 				221FAF4318C5EB1200B77952 /* MySignUpViewController.m in Sources */,
 				22CA949D1A79129A007ABFCF /* CMVAllEventsViewController.m in Sources */,

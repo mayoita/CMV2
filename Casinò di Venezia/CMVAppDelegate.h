@@ -25,6 +25,7 @@
 @property (strong, nonatomic) id<GAITracker> tracker;
 @property (nonatomic)BOOL appOpen;
 @property (strong, nonatomic) NSMutableArray *storage;
+@property (nonatomic, strong) NSDateFormatter *dateFormatter;
 
 - (BOOL)isParseReachable;
 -(void)proximityMonitoring:(NSUserDefaults *)aDefaults;

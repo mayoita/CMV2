@@ -21,7 +21,7 @@
 #import "CMVLocalize.h"
 
 #import "CMVEventKitShared.h"
-
+#import "Events.h"
 
 #define cellIdentifier @"CustomCell"
 #define PARSE_CLASS_NAME @"Events"
@@ -40,7 +40,7 @@
 @property (strong, nonatomic) NSArray *sortedDays;
 @property (strong, nonatomic) NSDateFormatter *sectionDateFormatter;
 @property (strong, nonatomic) NSDateFormatter *cellDateFormatter;
-
+@property (nonatomic, strong) NSDateFormatter *dateFormatter;
 
 
 @end
@@ -60,6 +60,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // Sets up the date formatter.
+    self.dateFormatter = [NSDateFormatter new];
+    self.dateFormatter.dateStyle = kCFDateFormatterShortStyle;
+    self.dateFormatter.timeStyle = kCFDateFormatterShortStyle;
+    self.dateFormatter.locale = [NSLocale currentLocale];
+    [self.dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    [self.dateFormatter setDateFormat:@"dd/MM/yyyy"];
     dayFound = FALSE;
     today = [self dateAtBeginningOfDayForDate:[self dateAtBeginningOfDayForDate:[NSDate date]]];
     
@@ -92,7 +100,7 @@
         CMVEventViewController *eventDetail = [storyboard instantiateViewControllerWithIdentifier:@"EventViewControlleriPhone"];
         self.eventDelegate=eventDetail;
     }
-  //  [self loadStorage];
+  
     [self setOffice];
     
     
@@ -161,14 +169,12 @@
     [self.cellDateFormatter setTimeStyle:NSDateFormatterShortStyle];
     
     NSDate *now = [NSDate date];
-    NSDate *startDate = [self dateAtBeginningOfDayForDate:now];
-    //NSDate *endDate = [self dateByAddingYears:1 toDate:startDate];
-    
 
-    for (PFObject *event in _events)
+    //for (PFObject *event in _events)
+        for (Events *event in _events)
     {
         // Reduce event start date to date components (year, month, day)
-        NSDate *dateRepresentingThisDay = [self dateAtBeginningOfDayForDate:event[@"StartDate"]];
+        NSDate *dateRepresentingThisDay = [self dateAtBeginningOfDayForDate:event.StartDate];
         
         // If we don't yet have an array to hold the events for this day, create one
         NSMutableArray *eventsOnThisDay = [self.sections objectForKey:dateRepresentingThisDay];
@@ -234,7 +240,7 @@
 
 -(void)setOffice {
     
-    CMVSharedClass *shared=[[CMVSharedClass alloc] init];
+   
     if (self.site.location == VENEZIA) {
         Office=CN;
         _sections=nil;
@@ -261,33 +267,6 @@
     
     return helper;
     
-}
-
--(void)loadStorage {
-    PFQuery *query = [PFQuery queryWithClassName:PARSE_CLASS_NAME];
-    // If no objects are loaded in memory, we look to the cache first to fill the table
-    // and then subsequently do a query against the network. https://parse.com/docs/ios_guide#queries-caching/iOS
-    //BOOL isInCache = [query hasCachedResult];
-    //query.cachePolicy = kPFCachePolicyCacheElseNetwork;
-    [query setCachePolicy:kPFCachePolicyNetworkOnly];
-    if (![[UIApplication sharedApplication].delegate performSelector:@selector(isParseReachable)]) {
-        [query setCachePolicy:kPFCachePolicyCacheThenNetwork];
-    }
-    
-    if (storage.count == 0) {
-        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-            if (!error) {
-                    
-                    storage = objects.mutableCopy;
-                    [self setOffice];
-            
-            } else {
-                // Log details of the failure
-                NSLog(@"Error: %@ %@", error, [error userInfo]);
-            }
-        }];
-    }
-
 }
 
 -(NSMutableDictionary *)sections {
@@ -367,31 +346,31 @@
                 dayFound =TRUE;
             }
         }
-    PFObject *event=[eventsOnThisDay objectAtIndex:indexPath.row];
+    Events *event=[eventsOnThisDay objectAtIndex:indexPath.row];
    
     cell.labelDescription.hidden = YES;
     cell.readDescriptionS.hidden =YES;
-    cell.eventStartDate.text=[formatter stringFromDate:event[@"StartDate"]];
-    cell.startDate=event[@"StartDate"];
-    cell.endDate=event[@"EndDate"];
-    cell.eventEndDate.text=[formatter stringFromDate:event[@"EndDate"]];
+    cell.eventStartDate.text=[formatter stringFromDate:event.StartDate];
+    cell.startDate=event.StartDate;
+    cell.endDate=event.EndDate;
+    cell.eventEndDate.text=[formatter stringFromDate:event.EndDate];
     [self localizeMemo:cell event:event];
-    cell.eventURL=event[@"URL"];
+    cell.eventURL=event.URL;
     cell.picture.image = [UIImage imageNamed:@"Test.png"];
     cell.talking=NO;
-    
+    [cell.picture setImage:event.ImageName];
     //Show default image
-    PFFile *imageFile=event[@"ImageName"];
-    if (([imageFile isKindOfClass:[NSNull class]]) || (imageFile == nil)) {
-        cell.eventPicture.image = [UIImage imageNamed:@"Test.png"];
-        
-    } else {
-        [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-            
-            [cell.picture setImage:[UIImage imageWithData:data]];
-           
-        }    ];
-    }
+//    PFFile *imageFile=event[@"ImageName"];
+//    if (([imageFile isKindOfClass:[NSNull class]]) || (imageFile == nil)) {
+//        cell.eventPicture.image = [UIImage imageNamed:@"Test.png"];
+//        
+//    } else {
+//        [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+//            
+//            [cell.picture setImage:[UIImage imageWithData:data]];
+//           
+//        }    ];
+//    }
     cell.delegate = self;
     }
    
@@ -443,107 +422,107 @@
 }
 
 
--(void)localizeMemo:(CMVSwipeTableViewCell *)cell event:(PFObject *)event {
-    cell.eventName.text =event[@"Name"];
-    cell.eventDescription.text=event[@"Description"];
+-(void)localizeMemo:(CMVSwipeTableViewCell *)cell event:(Events *)event {
+    cell.eventName.text =event.Name;
+    cell.eventDescription.text=event.Description;
     switch ([CMVLocalize myDeviceLocaleIs]) {
         case IT :
-            if (!(([event[@"memoIT"] isKindOfClass:[NSNull class]]) || (event[@"memoIT"] == nil) || ([event[@"memoIT"] isEqualToString:@""]))) {
-                cell.eventMemo=event[@"memoIT"];
+            if (![event.memoIT isEqualToString:@"Null"]) {
+                cell.eventMemo=event.memoIT;
                 cell.readDescriptionS.hidden =NO;
             }
-            if (!(([event[@"NameIT"] isKindOfClass:[NSNull class]]) || (event[@"NameIT"] == nil))) {
-                cell.eventName.text = event[@"NameIT"];
+            if (!(([event.NameIT isKindOfClass:[NSNull class]]) || (event.NameIT == nil))) {
+                cell.eventName.text = event.NameIT;
             }
-            if (!(([event[@"DescriptionIT"] isKindOfClass:[NSNull class]]) || (event[@"DescriptionIT"] == nil))) {
-                cell.eventDescription.text = event[@"DescriptionIT"];
+            if (!(([event.DescriptionIT isKindOfClass:[NSNull class]]) || (event.DescriptionIT == nil))) {
+                cell.eventDescription.text = event.DescriptionIT;
                 
             }
             break;
         case DE :
-            if (!(([event[@"memoDE"] isKindOfClass:[NSNull class]]) || (event[@"memoDE"] == nil) || ([event[@"memoDE"] isEqualToString:@""]))) {
-                cell.eventMemo=event[@"memoDE"];
+            if (![event.memoDE isEqualToString:@"Null"]) {
+                cell.eventMemo=event.memoDE;
                 cell.readDescriptionS.hidden =NO;
             }
-            if (!(([event[@"NameDE"] isKindOfClass:[NSNull class]]) || (event[@"NameDE"] == nil))) {
-                cell.eventName.text = event[@"NameDE"];
+            if (!(([event.NameDE isKindOfClass:[NSNull class]]) || (event.NameDE == nil))) {
+                cell.eventName.text = event.NameDE;
             }
-            if (!(([event[@"DescriptionDE"] isKindOfClass:[NSNull class]]) || (event[@"DescriptionDE"] == nil))) {
-                cell.eventDescription.text = event[@"DescriptionDE"];
+            if (!(([event.DescriptionDE isKindOfClass:[NSNull class]]) || (event.DescriptionDE == nil))) {
+                cell.eventDescription.text = event.DescriptionDE;
                
             }
             break;
         case FR :
-            if (!(([event[@"memoFR"] isKindOfClass:[NSNull class]]) || (event[@"memoFR"] == nil) || ([event[@"memoFR"] isEqualToString:@""]))) {
-                cell.eventMemo=event[@"memoFR"];
+            if (![event.memoFR isEqualToString:@"Null"]) {
+                cell.eventMemo=event.memoFR;
                 cell.readDescriptionS.hidden =NO;
             }
-            if (!(([event[@"NameFR"] isKindOfClass:[NSNull class]]) || (event[@"NameFR"] == nil))) {
-                cell.eventName.text = event[@"NameFR"];
+            if (!(([event.NameFR isKindOfClass:[NSNull class]]) || (event.NameFR == nil))) {
+                cell.eventName.text = event.NameFR;
             }
-            if (!(([event[@"DescriptionFR"] isKindOfClass:[NSNull class]]) || (event[@"DescriptionFR"] == nil))) {
-                cell.eventDescription.text = event[@"DescriptionFR"];
+            if (!(([event.DescriptionFR isKindOfClass:[NSNull class]]) || (event.DescriptionFR == nil))) {
+                cell.eventDescription.text = event.DescriptionFR;
                 
             }
             break;
         case ES :
-            if (!(([event[@"memoES"] isKindOfClass:[NSNull class]]) || (event[@"memoES"] == nil) || ([event[@"memoES"] isEqualToString:@""]))) {
-                cell.eventMemo=event[@"memoES"];
+            if (![event.memoES isEqualToString:@"Null"]) {
+                cell.eventMemo=event.memoES;
                 cell.readDescriptionS.hidden =NO;
             }
-            if (!(([event[@"NameES"] isKindOfClass:[NSNull class]]) || (event[@"NameES"] == nil))) {
-                cell.eventName.text = event[@"NameES"];
+            if (!(([event.NameES isKindOfClass:[NSNull class]]) || (event.NameES == nil))) {
+                cell.eventName.text = event.NameES;
             }
-            if (!(([event[@"DescriptionES"] isKindOfClass:[NSNull class]]) || (event[@"DescriptionES"] == nil))) {
-                cell.eventDescription.text = event[@"DescriptionES"];
+            if (!(([event.DescriptionES isKindOfClass:[NSNull class]]) || (event.DescriptionES == nil))) {
+                cell.eventDescription.text = event.DescriptionES;
                 
             }
             break;
         case RU  :
-            if (!(([event[@"memoRU"] isKindOfClass:[NSNull class]]) || (event[@"memoRU"] == nil) || ([event[@"memoRU"] isEqualToString:@""]))) {
-                cell.eventMemo=event[@"memoRU"];
+            if (![event.memoRU isEqualToString:@"Null"]) {
+                cell.eventMemo=event.memoRU;
                 cell.readDescriptionS.hidden =NO;
             }
-            if (!(([event[@"NameRU"] isKindOfClass:[NSNull class]]) || (event[@"NameRU"] == nil))) {
-                cell.eventName.text = event[@"NameRU"];
+            if (!(([event.NameRU isKindOfClass:[NSNull class]]) || (event.NameRU == nil))) {
+                cell.eventName.text = event.NameRU;
             }
-            if (!(([event[@"DescriptionRU"] isKindOfClass:[NSNull class]]) || (event[@"DescriptionRU"] == nil))) {
-                cell.eventDescription.text = event[@"DescriptionRU"];
+            if (!(([event.DescriptionRU isKindOfClass:[NSNull class]]) || (event.DescriptionRU == nil))) {
+                cell.eventDescription.text = event.DescriptionRU;
                 
             }
             break;
         case ZH:
-            if (!(([event[@"memoZH"] isKindOfClass:[NSNull class]]) || (event[@"memoZH"] == nil) || ([event[@"memoZH"] isEqualToString:@""]))) {
-                cell.eventMemo=event[@"memoZH"];
+            if (![event.memoZH isEqualToString:@"Null"]) {
+                cell.eventMemo=event.memoZH;
                 cell.readDescriptionS.hidden =NO;
             }
-            if (!(([event[@"NameZH"] isKindOfClass:[NSNull class]]) || (event[@"NameZH"] == nil))) {
-                cell.eventName.text = event[@"NameZH"];
+            if (!(([event.NameZH isKindOfClass:[NSNull class]]) || (event.NameZH == nil))) {
+                cell.eventName.text = event.NameZH;
             }
-            if (!(([event[@"DescriptionZH"] isKindOfClass:[NSNull class]]) || (event[@"DescriptionZH"] == nil))) {
-                cell.eventDescription.text = event[@"DescriptionZH"];
+            if (!(([event.DescriptionZH isKindOfClass:[NSNull class]]) || (event.DescriptionZH == nil))) {
+                cell.eventDescription.text = event.DescriptionZH;
                 
             }
             break;
         case EN:
-            if (!(([event[@"memo"] isKindOfClass:[NSNull class]]) || (event[@"memo"] == nil) || ([event[@"memo"] isEqualToString:@""]))) {
-                cell.eventMemo=event[@"memo"];
+            if (![event.memo isEqualToString:@"Null"]) {
+                cell.eventMemo=event.memo;
                 cell.readDescriptionS.hidden =NO;
             }
-            cell.eventMemo=event[@"memo"];
-            if (!(([event[@"Name"] isKindOfClass:[NSNull class]]) || (event[@"Name"] == nil))) {
-                cell.eventName.text = event[@"Name"];
+            cell.eventMemo=event.memo;
+            if (!(([event.Name isKindOfClass:[NSNull class]]) || (event.Name == nil))) {
+                cell.eventName.text = event.Name;
             }
-            if (!(([event[@"Description"] isKindOfClass:[NSNull class]]) || (event[@"Description"] == nil))) {
-                cell.eventDescription.text = event[@"Description"];
+            if (!(([event.Description isKindOfClass:[NSNull class]]) || (event.Description == nil))) {
+                cell.eventDescription.text = event.Description;
                 
             }
             break;
             
         default:
-            cell.eventMemo=event[@"memo"];
-            cell.eventName.text =event[@"Name"];
-            cell.eventDescription.text=event[@"Description"];
+            cell.eventMemo=event.memo;
+            cell.eventName.text =event.Name;
+            cell.eventDescription.text=event.Description;
             
             break;
     }

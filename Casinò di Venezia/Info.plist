@@ -72,6 +72,31 @@
 				<false/>
 			</dict>
 		</dict>
+		<key>akamaihd.net</key>
+		<dict>
+			<key>NSExceptionRequiresForwardSecrecy</key>
+			<false/>
+			<key>NSIncludesSubdomains</key>
+			<true/>
+		</dict>
+		<key>amazonaws.com</key>
+		<dict>
+			<key>NSIncludesSubdomains</key>
+			<true/>
+			<key>NSThirdPartyExceptionMinimumTLSVersion</key>
+			<string>TLSv1.0</string>
+			<key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+			<false/>
+		</dict>
+		<key>cloudfront.net</key>
+		<dict>
+			<key>NSIncludesSubdomains</key>
+			<true/>
+			<key>NSThirdPartyExceptionMinimumTLSVersion</key>
+			<string>TLSv1.0</string>
+			<key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>This app will use your location information to alert you when you are close to the Casinò and to notify you about news, events and promotions.</string>

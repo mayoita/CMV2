@@ -43,5 +43,6 @@
 @property (nonatomic, strong) NSString *NameZH;
 @property (nonatomic, strong) NSString *office;
 @property (nonatomic, strong) NSString *URL;
+@property (nonatomic, strong)UITableView *theTableView;
 
 @end

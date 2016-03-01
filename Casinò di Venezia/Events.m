@@ -61,38 +61,45 @@
         downloadRequest.bucket = S3BucketName;
         downloadRequest.key = _ImageName;
         
+        
         //NSString *downloadingFilePath = book.ImageName;
         // NSURL *downloadingFileURL = [NSURL fileURLWithPath:downloadingFilePath];
         
         downloadRequest.downloadingFileURL = downloadingFileURL;
-        
-        // Download the file.
-        [[transferManager download:downloadRequest] continueWithExecutor:[AWSExecutor mainThreadExecutor]
-                                                               withBlock:^id(AWSTask *task) {
-                                                                   if (task.error){
-                                                                       if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
-                                                                           switch (task.error.code) {
-                                                                               case AWSS3TransferManagerErrorCancelled:
-                                                                               case AWSS3TransferManagerErrorPaused:
-                                                                                   break;
-                                                                                   
-                                                                               default:
-                                                                                   NSLog(@"Error: %@", task.error);
-                                                                                   break;
+        if ([UIImage imageWithContentsOfFile:downloadingFilePath] == nil) {
+            // Download the file.
+            [[transferManager download:downloadRequest] continueWithExecutor:[AWSExecutor mainThreadExecutor]
+                                                                   withBlock:^id(AWSTask *task) {
+                                                                       if (task.error){
+                                                                           if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
+                                                                               switch (task.error.code) {
+                                                                                   case AWSS3TransferManagerErrorCancelled:
+                                                                                   case AWSS3TransferManagerErrorPaused:
+                                                                                       break;
+                                                                                       
+                                                                                   default:
+                                                                                       NSLog(@"Error: %@", task.error);
+                                                                                       break;
+                                                                               }
+                                                                           } else {
+                                                                               // Unknown error.
+                                                                               NSLog(@"Error: %@", task.error);
                                                                            }
-                                                                       } else {
-                                                                           // Unknown error.
-                                                                           NSLog(@"Error: %@", task.error);
                                                                        }
-                                                                   }
-                                                                   
-                                                                   if (task.result) {
-                                                                       AWSS3TransferManagerDownloadOutput *downloadOutput = task.result;
-                                                                       NSLog(@"a");
-                                                                       return [UIImage imageWithContentsOfFile:downloadingFilePath];
-                                                                   }
-                                                                   return nil;
-                                                               }];
+                                                                       
+                                                                       if (task.result) {
+                                                                           AWSS3TransferManagerDownloadOutput *downloadOutput = task.result;
+                                                                           dispatch_async(dispatch_get_main_queue(), ^{
+                                                                               [self.theTableView reloadData];
+                                                                           });
+                                                                           
+                                                                       }
+                                                                       return nil;
+                                                                   }];
+        }
+        
+        
+        return [UIImage imageWithContentsOfFile:downloadingFilePath];
    
     }
 

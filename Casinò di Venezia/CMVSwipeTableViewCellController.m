@@ -347,6 +347,7 @@
             }
         }
     Events *event=[eventsOnThisDay objectAtIndex:indexPath.row];
+        event.theTableView = tableView;
    
     cell.labelDescription.hidden = YES;
     cell.readDescriptionS.hidden =YES;
@@ -359,18 +360,7 @@
     cell.picture.image = [UIImage imageNamed:@"Test.png"];
     cell.talking=NO;
     [cell.picture setImage:event.ImageName];
-    //Show default image
-//    PFFile *imageFile=event[@"ImageName"];
-//    if (([imageFile isKindOfClass:[NSNull class]]) || (imageFile == nil)) {
-//        cell.eventPicture.image = [UIImage imageNamed:@"Test.png"];
-//        
-//    } else {
-//        [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-//            
-//            [cell.picture setImage:[UIImage imageWithData:data]];
-//           
-//        }    ];
-//    }
+
     cell.delegate = self;
     }
    

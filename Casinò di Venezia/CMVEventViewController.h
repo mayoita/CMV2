@@ -24,7 +24,7 @@
 
 @property (weak, nonatomic) IBOutlet UITextView *eventDescription;
 
-@property (strong, nonatomic) PFObject *event;
+@property (strong, nonatomic) Events *event;
 
 @property(strong,nonatomic)CMVSwipeTableViewCell *cell;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;

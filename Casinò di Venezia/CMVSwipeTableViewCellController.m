@@ -381,6 +381,8 @@
     CMVAllEvents *detailViewManager = (CMVAllEvents *)self.splitViewController.delegate;
     
     CMVSwipeTableViewCell *cell = (CMVSwipeTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    //qui
+    self.eventDelegate =[storyboard instantiateViewControllerWithIdentifier:@"EventViewControlleriPhone"];
     [self configureDetailItemForRow:indexPath viewController:self.eventDelegate withCell:cell];
     
     if (iPHONE) {

@@ -11,7 +11,9 @@
 #define kOverlayHeight      15
 
 #import "KIImagePager.h"
-#import <Parse/Parse.h>
+#import "AWSConfiguration.h"
+
+#import <AWSS3/AWSS3.h>
 
 @interface KIImagePager () <UIScrollViewDelegate>
 {
@@ -27,6 +29,7 @@
     NSMutableDictionary *_activityIndicators;
     
     BOOL _indicatorDisabled;
+    BOOL _loaded;
 
 }
 
@@ -39,6 +42,7 @@
 @synthesize contentMode = _contentMode;
 @synthesize pageControl = _pageControl;
 @synthesize indicatorDisabled = _indicatorDisabled;
+
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -77,6 +81,7 @@
         [self initalizeImageCounter];
     }
     [self loadData];
+    //_loaded = YES;
 }
 
 - (UIColor *) randomColor
@@ -137,8 +142,16 @@
 
 - (void) loadData
 {
+    if (!_loaded) {
+        //_loaded = YES;
     NSArray *aImageUrls = (NSArray *)[_dataSource arrayWithImages];
     _activityIndicators = [NSMutableDictionary new];
+    
+    //AWS S3
+    AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
+    AWSS3TransferManagerDownloadRequest *downloadRequest = [AWSS3TransferManagerDownloadRequest new];
+    
+    downloadRequest.bucket = S3BucketName;
     
     if([aImageUrls count] > 0) {
         [_scrollView setContentSize:CGSizeMake(_scrollView.frame.size.width * [aImageUrls count],
@@ -166,32 +179,65 @@
                 [activityIndicator startAnimating];
                 [_activityIndicators setObject:activityIndicator forKey:[NSString stringWithFormat:@"%d", i]];
                 
+                //AWS asynchronously retrieve image
+                NSString *downloadingFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[aImageUrls objectAtIndex:i]];
+                NSURL *downloadingFileURL = [NSURL fileURLWithPath:downloadingFilePath];
+              
+                downloadRequest.key = [aImageUrls objectAtIndex:i];
+                //downloadRequest.downloadingFileURL = downloadingFileURL;
+                [[transferManager download:downloadRequest] continueWithExecutor:[AWSExecutor mainThreadExecutor]
+                                                                       withBlock:^id(AWSTask *task) {
+                                                                           if (task.error){
+                                                                               if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
+                                                                                   switch (task.error.code) {
+                                                                                       case AWSS3TransferManagerErrorCancelled:
+                                                                                       case AWSS3TransferManagerErrorPaused:
+                                                                                           break;
+                                                                                           
+                                                                                       default:
+                                                                                           NSLog(@"Error: %@", task.error);
+                                                                                           break;
+                                                                                   }
+                                                                               } else {
+                                                                                   // Unknown error.
+                                                                                   NSLog(@"Error: %@", task.error);
+                                                                               }
+                                                                           }
+                                                                           
+                                                                           if (task.result) {
+                                                                               AWSS3TransferManagerDownloadOutput *downloadOutput = task.result;
+                                                                              
+                                                                               dispatch_async(dispatch_get_main_queue(), ^{
+                                                                                   [imageView setImage: [UIImage imageWithContentsOfFile:downloadingFilePath]];
+                                                                                   // Stop and Remove Activity Indicator
+                                                                                                           UIActivityIndicatorView *indicatorView = (UIActivityIndicatorView *)[_activityIndicators objectForKey:[NSString stringWithFormat:@"%d", i]];
+                                                                                                           if (indicatorView) {
+                                                                                                              [indicatorView stopAnimating];
+                                                                                                               [_activityIndicators removeObjectForKey:[NSString stringWithFormat:@"%d", i]];
+                                                                                                           }
+                                                                               });
+                                                                               
+                                                                           }
+                                                                           return nil;
+                                                                       }];
+                
                 // Asynchronously retrieve image
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-                    NSData *imageData = [NSData dataWithContentsOfURL:
-                                         [[aImageUrls objectAtIndex:i] isKindOfClass:[NSURL class]]?
-                                         [aImageUrls objectAtIndex:i]:
-                                         [NSURL URLWithString:(NSString *)[aImageUrls objectAtIndex:i]]];
-                    dispatch_sync(dispatch_get_main_queue(), ^{
-                        [imageView setImage:[UIImage imageWithData:imageData]];
-
-                        // Stop and Remove Activity Indicator
-                        UIActivityIndicatorView *indicatorView = (UIActivityIndicatorView *)[_activityIndicators objectForKey:[NSString stringWithFormat:@"%d", i]];
-                        if (indicatorView) {
-                            [indicatorView stopAnimating];
-                            [_activityIndicators removeObjectForKey:[NSString stringWithFormat:@"%d", i]];
-                        }
-                    });
-                });
-            } else if ([[aImageUrls objectAtIndex:i] isKindOfClass:[PFFile class]]) {
-                
-                
-                
-                [[aImageUrls objectAtIndex:i] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-               
-                    [imageView setImage:[UIImage imageWithData:data]];
-                }
-                 ];
+//                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+//                    NSData *imageData = [NSData dataWithContentsOfURL:
+//                                         [[aImageUrls objectAtIndex:i] isKindOfClass:[NSURL class]]?
+//                                         [aImageUrls objectAtIndex:i]:
+//                                         [NSURL URLWithString:(NSString *)[aImageUrls objectAtIndex:i]]];
+//                    dispatch_sync(dispatch_get_main_queue(), ^{
+//                        [imageView setImage:[UIImage imageWithData:imageData]];
+//
+//                        // Stop and Remove Activity Indicator
+//                        UIActivityIndicatorView *indicatorView = (UIActivityIndicatorView *)[_activityIndicators objectForKey:[NSString stringWithFormat:@"%d", i]];
+//                        if (indicatorView) {
+//                            [indicatorView stopAnimating];
+//                            [_activityIndicators removeObjectForKey:[NSString stringWithFormat:@"%d", i]];
+//                        }
+//                    });
+//                });
             }
             
             // Add GestureRecognizer to ImageView
@@ -214,6 +260,7 @@
         UIImageView *blankImage = [[UIImageView alloc] initWithFrame:_scrollView.frame];
         [blankImage setImage:[_dataSource placeHolderImageForImagePager]];
         [_scrollView addSubview:blankImage];
+    }
     }
 }
 

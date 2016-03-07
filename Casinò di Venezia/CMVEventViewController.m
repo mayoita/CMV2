@@ -106,15 +106,15 @@
 - (NSArray *) arrayWithImages
 {
     NSMutableArray *photo=[[NSMutableArray alloc] init];
-    PFFile *imageFile1=_event.ImageEvent1;
-    PFFile *imageFile2=_event.ImageEvent2;
-    PFFile *imageFile3=_event.ImageEvent3;
-    PFFile *defaultImage=_event.ImageName;
+    UIImage *imageFile1=_event.ImageEvent1;
+    UIImage *imageFile2=_event.ImageEvent2;
+    UIImage *imageFile3=_event.ImageEvent3;
+    UIImage *defaultImage=_event.ImageName;
     self.imagePager.indicatorDisabled = TRUE;
     
     //self.imagePager.hidden = YES;
     self.whiteView.hidden = YES;
-    if (!(([imageFile1 isKindOfClass:[NSNull class]]) || (imageFile1 == nil))) {
+    if ([_event.ImageEvent1 isKindOfClass:[UIImage class]]) {
         self.imagePager.indicatorDisabled = FALSE;
         //self.imagePager.hidden =NO;
          self.whiteView.hidden = NO;
@@ -122,10 +122,10 @@
     } else {
         [photo addObject:defaultImage];
     }
-    if (!(([imageFile2 isKindOfClass:[NSNull class]]) || (imageFile2 == nil))) {
+    if ([_event.ImageEvent2 isKindOfClass:[UIImage class]]) {
         [photo addObject:imageFile2];
     }
-    if (!(([imageFile3 isKindOfClass:[NSNull class]]) || (imageFile3 == nil))) {
+    if ([_event.ImageEvent3 isKindOfClass:[UIImage class]]) {
         [photo addObject:imageFile3];
     }
 
@@ -145,9 +145,10 @@
     //Make sure you're not setting up the same event.
     if (_event != event) {
         _event = event;
+       
         
         //Update the UI to reflect the new event on the iPad.
-        [self refreshUI];
+        //[self refreshUI];
     }
 }
 
@@ -167,6 +168,7 @@
     _eventDescription.textColor=[UIColor whiteColor];
     _eventDate.text = [formatter stringFromDate:_event.StartDate];
     [self calculateHeight];
+    self.event.imK = self.imagePager;
     [self.imagePager reloadData];
 }
 

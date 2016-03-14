@@ -16,7 +16,6 @@
 #import "GAIFields.h"
 #import "GAI.h"
 #import "KIImagePager.h"
-#import "Events.h"
 #define PADDING 0.0f;
 
 @interface CMVEventViewController () <KIImagePagerDelegate, KIImagePagerDataSource>
@@ -25,7 +24,6 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *textViewHeight;
 @property (weak, nonatomic) IBOutlet UIView *whiteView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageHeightConstrait;
-
 
 
 @end
@@ -57,8 +55,6 @@
     self.eventDate.font=GOTHAM_BOOK(16);
     self.eventDate.textColor=[UIColor whiteColor];
     self.closeButton.color=[UIColor redColor];
-    
-   
    
 }
 
@@ -69,6 +65,9 @@
     [self refreshUI];
 }
 
+-(void)viewDidDisappear:(BOOL)animated {
+  //  self.imagePager=nil;
+}
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
@@ -81,7 +80,7 @@
     }
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:value];
-    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+    [tracker send:[[GAIDictionaryBuilder createAppView] build]];
 
 }
 
@@ -105,17 +104,16 @@
 
 - (NSArray *) arrayWithImages
 {
-
     NSMutableArray *photo=[[NSMutableArray alloc] init];
-    NSString *imageFile1=_event.ImageEvent1;
-    NSString *imageFile2=_event.ImageEvent2;
-    NSString *imageFile3=_event.ImageEvent3;
-    UIImage *defaultImage=_event.ImageName;
+    PFFile *imageFile1=_event[@"ImageEvent1"];
+    PFFile *imageFile2=_event[@"ImageEvent2"];
+    PFFile *imageFile3=_event[@"ImageEvent3"];
+    PFFile *defaultImage=_event[@"ImageName"];
     self.imagePager.indicatorDisabled = TRUE;
     
     //self.imagePager.hidden = YES;
     self.whiteView.hidden = YES;
-    if (![imageFile1 isEqualToString:@"NULL"]) {
+    if (!(([imageFile1 isKindOfClass:[NSNull class]]) || (imageFile1 == nil))) {
         self.imagePager.indicatorDisabled = FALSE;
         //self.imagePager.hidden =NO;
          self.whiteView.hidden = NO;
@@ -123,10 +121,10 @@
     } else {
         [photo addObject:defaultImage];
     }
-    if (![imageFile1 isEqualToString:@"NULL"]) {
+    if (!(([imageFile2 isKindOfClass:[NSNull class]]) || (imageFile2 == nil))) {
         [photo addObject:imageFile2];
     }
-    if (![imageFile3 isEqualToString:@"NULL"]) {
+    if (!(([imageFile3 isKindOfClass:[NSNull class]]) || (imageFile3 == nil))) {
         [photo addObject:imageFile3];
     }
 
@@ -141,12 +139,14 @@
 }
 
 
--(void)setEvent:(Events *)event
+-(void)setEvent:(PFObject *)event
 {
     //Make sure you're not setting up the same event.
     if (_event != event) {
         _event = event;
-
+        
+        //Update the UI to reflect the new event on the iPad.
+        [self refreshUI];
     }
 }
 
@@ -164,75 +164,78 @@
     
     [self localizeMemo:_event];
     _eventDescription.textColor=[UIColor whiteColor];
-    _eventDate.text = [formatter stringFromDate:_event.StartDate];
+    _eventDate.text = [formatter stringFromDate:_event[@"StartDate"]];
     [self calculateHeight];
+    [self.imagePager reloadData];
 }
 
--(void)localizeMemo:(Events *)event {
-    _eventName.text = event.Name;
-    _eventDescription.text = event.Description;
+-(void)localizeMemo:(PFObject *)event {
+    _eventName.text = event[@"Name"];
+    _eventDescription.text = event[@"Description"];
     switch ([CMVLocalize myDeviceLocaleIs]) {
         case IT :
-            if (![event.NameIT isEqualToString:@"Null"]) {
-            _eventName.text = event.NameIT;
+            if (!(([event[@"NameIT"] isKindOfClass:[NSNull class]]) || (event[@"NameIT"] == nil))) {
+            _eventName.text = event[@"NameIT"];
             }
-            if (![event.DescriptionIT isEqualToString:@"Null"]) {
-            _eventDescription.text = event.DescriptionIT;
+            if (!(([event[@"DescriptionIT"] isKindOfClass:[NSNull class]]) || (event[@"DescriptionIT"] == nil))) {
+            _eventDescription.text = event[@"DescriptionIT"];
             }
             break;
         case DE :
-            if (![event.NameDE isEqualToString:@"Null"]) {
-                _eventName.text = event.NameDE;
+            
+            if (!(([event[@"NameDE"] isKindOfClass:[NSNull class]]) || (event[@"NameDE"] == nil))) {
+                _eventName.text = event[@"NameDE"];
             }
-            if (![event.DescriptionDE isEqualToString:@"Null"]) {
-                _eventDescription.text = event.DescriptionDE;
+            if (!(([event[@"DescriptionDE"] isKindOfClass:[NSNull class]]) || (event[@"DescriptionDE"] == nil))) {
+                _eventDescription.text = event[@"DescriptionDE"];
             }
             break;
         case FR :
             
-            if (![event.NameFR isEqualToString:@"Null"]) {
-                _eventName.text = event.NameFR;
+            if (!(([event[@"NameFR"] isKindOfClass:[NSNull class]]) || (event[@"NameFR"] == nil))) {
+                _eventName.text = event[@"NameFR"];
             }
-            if (![event.DescriptionFR isEqualToString:@"Null"]) {
-                _eventDescription.text = event.DescriptionFR;
+            if (!(([event[@"DescriptionFR"] isKindOfClass:[NSNull class]]) || (event[@"DescriptionFR"] == nil))) {
+                _eventDescription.text = event[@"DescriptionFR"];
             }
             break;
         case ES :
-            if (![event.NameES isEqualToString:@"Null"]) {
-                _eventName.text = event.NameES;
+            
+            if (!(([event[@"NameES"] isKindOfClass:[NSNull class]]) || (event[@"NameES"] == nil))) {
+                _eventName.text = event[@"NameES"];
             }
-            if (![event.DescriptionES isEqualToString:@"Null"]) {
-                _eventDescription.text = event.DescriptionES;
+            if (!(([event[@"DescriptionES"] isKindOfClass:[NSNull class]]) || (event[@"DescriptionES"] == nil))) {
+                _eventDescription.text = event[@"DescriptionES"];
             }
             break;
         case ZH  :
             
-            if (![event.NameZH isEqualToString:@"Null"]) {
-                _eventName.text = event.NameZH;
+            if (!(([event[@"NameZH"] isKindOfClass:[NSNull class]]) || (event[@"NameZH"] == nil))) {
+                _eventName.text = event[@"NameZH"];
             }
-            if (![event.DescriptionZH isEqualToString:@"Null"]) {
-                _eventDescription.text = event.DescriptionZH;
+            if (!(([event[@"DescriptionZH"] isKindOfClass:[NSNull class]]) || (event[@"DescriptionZH"] == nil))) {
+                _eventDescription.text = event[@"DescriptionZH"];
             }
             break;
         case RU:
             
-            if (![event.NameRU isEqualToString:@"Null"]) {
-                _eventName.text = event.NameRU;
+            if (!(([event[@"NameRU"] isKindOfClass:[NSNull class]]) || (event[@"NameRU"] == nil))) {
+                _eventName.text = event[@"NameRU"];
             }
-            if (![event.DescriptionRU isEqualToString:@"Null"]) {
-                _eventDescription.text = event.DescriptionRU;
+            if (!(([event[@"DescriptionRU"] isKindOfClass:[NSNull class]]) || (event[@"DescriptionRU"] == nil))) {
+                _eventDescription.text = event[@"DescriptionRU"];
             }
             break;
             
         default:
             
-            _eventName.text = event.Name;
-            _eventDescription.text = event.Description;
+            _eventName.text = event[@"Name"];
+            _eventDescription.text = event[@"Description"];
             break;
     }
 }
 
--(void)selectedEvent:(Events *)newEvent {
+-(void)selectedEvent:(PFObject *)newEvent {
     [self setEvent:newEvent];
 }
 

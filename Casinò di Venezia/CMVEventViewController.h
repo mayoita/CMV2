@@ -12,7 +12,7 @@
 #import "AAShareBubbles.h"
 #import "CMVSwipeTableViewCell.h"
 #import "CMVGameSplitViewController.h"
-
+#import <Parse/Parse.h>
 #import "CMVCloseButton.h"
 
 
@@ -24,7 +24,7 @@
 
 @property (weak, nonatomic) IBOutlet UITextView *eventDescription;
 
-@property (strong, nonatomic) Events *event;
+@property (strong, nonatomic) PFObject *event;
 
 @property(strong,nonatomic)CMVSwipeTableViewCell *cell;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;

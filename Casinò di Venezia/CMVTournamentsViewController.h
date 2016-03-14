@@ -16,12 +16,11 @@
 #import "CMVArrowSx.h"
 #import "CMVArrow.h"
 #import "CMVSharedButton.h"
-#import "Tournament.h"
 
 @interface CMVTournamentsViewController : UIViewController <SubstitutableDetailViewController,AAShareBubblesDelegate,UITableViewDataSource, UITableViewDelegate>
 @property(strong,nonatomic)CMVSwipeTableViewCell *cell;
 @property (strong,nonatomic)NSArray *dataSourceItems;
-@property (strong,nonatomic)Tournament *dataSourceItemsWithRules;
+@property (strong,nonatomic)PFObject *dataSourceItemsWithRules;
 
 @property (weak, nonatomic) IBOutlet UILabel *titleView;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
@@ -40,6 +39,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *nomeTorneo;
 @property (weak, nonatomic) IBOutlet UITextView *noteGenerali;
--(void)selectedTournament:(Tournament *)newTournament;
+-(void)selectedTournament:(PFObject *)newTournament;
 
 @end

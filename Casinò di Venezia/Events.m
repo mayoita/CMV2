@@ -9,11 +9,7 @@
 #import "Events.h"
 #import "AWSConfiguration.h"
 #import <AWSS3/AWSS3.h>
-@interface Events() {
-    BOOL imUno;
-    BOOL imDue;
-    BOOL imTre;
-}
+@interface Events()
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 @end
 
@@ -28,7 +24,6 @@
         self.dateFormatter.locale = [NSLocale currentLocale];
         [self.dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
         [self.dateFormatter setDateFormat:@"dd/MM/yyyy"];
-
     }
     return self;
 }
@@ -61,9 +56,14 @@
         AWSS3TransferManagerDownloadRequest *downloadRequest = [AWSS3TransferManagerDownloadRequest new];
         
         NSString *downloadingFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:_ImageName];
+       // NSString *downloadingFilePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:@"download"] stringByAppendingPathComponent:_ImageName];
         NSURL *downloadingFileURL = [NSURL fileURLWithPath:downloadingFilePath];
         downloadRequest.bucket = S3BucketName;
         downloadRequest.key = _ImageName;
+        
+        
+        //NSString *downloadingFilePath = book.ImageName;
+        // NSURL *downloadingFileURL = [NSURL fileURLWithPath:downloadingFilePath];
         
         downloadRequest.downloadingFileURL = downloadingFileURL;
         if ([UIImage imageWithContentsOfFile:downloadingFilePath] == nil) {
@@ -88,7 +88,7 @@
                                                                        }
                                                                        
                                                                        if (task.result) {
-                                                                           
+                                                                           AWSS3TransferManagerDownloadOutput *downloadOutput = task.result;
                                                                            dispatch_async(dispatch_get_main_queue(), ^{
                                                                                [self.theTableView reloadData];
                                                                            });
@@ -98,15 +98,11 @@
                                                                    }];
         }
         
-        if ([UIImage imageWithContentsOfFile:downloadingFilePath] == nil) {
-            return [UIImage imageNamed:@"640x408default.jpg"];
-        } else {
+        
         return [UIImage imageWithContentsOfFile:downloadingFilePath];
-        }
    
     }
 
-    return [UIImage imageNamed:@"640x408default.jpg"];
+    return _ImageName;
 }
-
 @end

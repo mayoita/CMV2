@@ -31,7 +31,7 @@
     
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:@"Newsletter"];
-    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+    [tracker send:[[GAIDictionaryBuilder createAppView] build]];
 
 }
 

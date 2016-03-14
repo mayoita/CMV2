@@ -69,7 +69,7 @@ static NSNumberFormatter *sUserVisibleDateFormatter = nil;
     
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:@"VPCStandings"];
-    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+    [tracker send:[[GAIDictionaryBuilder createAppView] build]];
     
 }
 

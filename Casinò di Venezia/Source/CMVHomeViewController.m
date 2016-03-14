@@ -15,10 +15,6 @@
 #import "CMVLocalize.h"
 #import "CMVGradientForNews.h"
 #import "CMVArrowChat.h"
-#import <AWSDynamoDB/AWSDynamoDB.h>
-#import "Jackpot.h"
-#import "Festivity.h"
-#import "News.h"
 
 
 #define VE 0
@@ -52,7 +48,7 @@
 @synthesize labelMarquee;
 int Office;
 BOOL VeSaPr = 0;
-Festivity *storageFestivity;
+PFObject *storageFestivity;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -82,25 +78,16 @@ Festivity *storageFestivity;
     self.checkCurrency=[[CMVSetUpCurrency alloc] init];
     [self.checkCurrency exchangeRates];
     
-    AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
-    [[dynamoDBObjectMapper load:[Jackpot class] hashKey:@"1" rangeKey:nil]
-     continueWithBlock:^id(AWSTask *task) {
-         if (task.error) {
-             NSLog(@"The request failed. Error: [%@]", task.error);
-         }
-         if (task.exception) {
-             NSLog(@"The request failed. Exception: [%@]", task.exception);
-         }
-         if (task.result) {
-
-             Jackpot *item = task.result;
-             self.jackpot.text=item.jackpot;
-             self.jackpot.text=[self.checkCurrency setupCurrency:self.jackpot.text];
-             
-         }
-         return nil;
-     }];
+    PFQuery *query = [PFQuery queryWithClassName:@"Jackpot"];
+    [query setCachePolicy:kPFCachePolicyNetworkOnly];
+    if ( ![[UIApplication sharedApplication].delegate performSelector:@selector(isParseReachable)]) {
+        [query setCachePolicy:kPFCachePolicyCacheThenNetwork];
+    }
     
+    [query getObjectInBackgroundWithId:@"ykIRbhqKUn" block:^(PFObject *gameScore, NSError *error) {
+        self.jackpot.text=gameScore[@"jackpot"];
+        self.jackpot.text=[self.checkCurrency setupCurrency:self.jackpot.text];
+    }];
     
     self.mainTabBarController = (CMVMainTabbarController *)self.tabBarController;
     [self.mainTabBarController setCenterButtonDelegate:self];
@@ -128,7 +115,7 @@ Festivity *storageFestivity;
   
  
         
-        for (id object in storageFestivity) {
+        for (id object in storageFestivity[@"festivity"]) {
             
             if ([[CMVCheckWeekDay checkWeekDAy][@"day"] intValue] == [object[0] intValue] && [[CMVCheckWeekDay checkWeekDAy][@"month"] intValue] == [object[1] intValue]) {
                 VeSaPr=1;
@@ -140,23 +127,25 @@ Festivity *storageFestivity;
 }
 
 -(void)loadStorageFestivity {
-    AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
+     PFQuery *queryFestivity = [PFQuery queryWithClassName:@"Festivity"];
+    // If no objects are loaded in memory, we look to the cache first to fill the table
+    // and then subsequently do a query against the network. https://parse.com/docs/ios_guide#queries-caching/iOS
+    //BOOL isInCache = [query hasCachedResult];
+    //query.cachePolicy = kPFCachePolicyCacheElseNetwork;
+    [queryFestivity setCachePolicy:kPFCachePolicyNetworkOnly];
+    if (![[UIApplication sharedApplication].delegate performSelector:@selector(isParseReachable)]) {
+        [queryFestivity setCachePolicy:kPFCachePolicyCacheThenNetwork];
+    }
     
-    [[dynamoDBObjectMapper load:[Festivity class] hashKey:@"1" rangeKey:nil]
-     continueWithBlock:^id(AWSTask *task) {
-         if (task.error) {
-             NSLog(@"The request failed. Error: [%@]", task.error);
-         }
-         if (task.exception) {
-             NSLog(@"The request failed. Exception: [%@]", task.exception);
-         }
-         if (task.result) {
-             
-             Festivity *item = task.result;
-             storageFestivity = item.festivity;
-         }
-         return nil;
-     }];
+
+    [queryFestivity getObjectInBackgroundWithId:@"7VTo3n7rum" block:^(PFObject *festivityarray, NSError *error) {
+        if (!error) {
+             storageFestivity = festivityarray;
+        }
+       
+        
+       
+    }];
     
     
 }
@@ -216,106 +205,94 @@ Festivity *storageFestivity;
     
     self.labelMarqueeText=[UILabel new];
     
-    AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
     
-    [[dynamoDBObjectMapper load:[News class] hashKey:@"1" rangeKey:nil]
-     continueWithBlock:^id(AWSTask *task) {
-         if (task.error) {
-             NSLog(@"The request failed. Error: [%@]", task.error);
-         }
-         if (task.exception) {
-             NSLog(@"The request failed. Exception: [%@]", task.exception);
-         }
-         if (task.result) {
-             
-             News *item = task.result;
-             switch ([CMVLocalize myDeviceLocaleIs]) {
-                 case IT :
-                     self.labelMarqueeText.text=item.NewsIT;
-                     break;
-                 case DE :
-                     self.labelMarqueeText.text=item.NewsDE;
-                     break;
-                 case FR :
-                     self.labelMarqueeText.text=item.NewsFR;
-                     break;
-                 case ES :
-                     self.labelMarqueeText.text=item.NewsES;
-                     break;
-                 case RU  :
-                     self.labelMarqueeText.text=item.NewsRU;
-                     break;
-                 case ZH:
-                     self.labelMarqueeText.text=item.NewsZH;
-                     break;
-                     
-                 default:
-                     self.labelMarqueeText.text=item.News;
-                     break;
-             }
-             
-             self.labelMarqueeText.textColor=[UIColor whiteColor];
-             [ self.labelMarqueeText sizeToFit];
-             
-             labelMarquee = [[DVOMarqueeView alloc] initWithFrame:CGRectMake(0, self.tabBarController.tabBar.frame.origin.y -35, CGRectGetWidth(self.view.bounds), 30)];
-             labelMarquee.viewToScroll =  self.labelMarqueeText;
-             CMVGradientForNews *gradient=[[CMVGradientForNews alloc] initWithFrame:CGRectMake(0, self.tabBarController.tabBar.frame.origin.y -35, CGRectGetWidth(self.view.bounds), 30)];
-             self.labelMarquee=labelMarquee;
-             [self.view addSubview:labelMarquee];
-             [self.view addSubview:gradient];
-             
-             [labelMarquee beginScrolling];
-         }
-         return nil;
-     }];
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"News"];
+    [query setCachePolicy:kPFCachePolicyNetworkOnly];
+    if (![[UIApplication sharedApplication].delegate performSelector:@selector(isParseReachable)]) {
+        [query setCachePolicy:kPFCachePolicyCacheThenNetwork];
+    }
+    [query getObjectInBackgroundWithId:@"PGGDgYmTik" block:^(PFObject *object, NSError *error) {
+        
+        switch ([CMVLocalize myDeviceLocaleIs]) {
+            case IT :
+                self.labelMarqueeText.text=object[@"NewsIT"];
+                break;
+            case DE :
+                self.labelMarqueeText.text=object[@"NewsDE"];
+                break;
+            case FR :
+                self.labelMarqueeText.text=object[@"NewsFR"];
+                break;
+            case ES :
+                self.labelMarqueeText.text=object[@"NewsES"];
+                break;
+            case RU  :
+                self.labelMarqueeText.text=object[@"NewsRU"];
+                break;
+            case ZH:
+                self.labelMarqueeText.text=object[@"NewsZH"];
+                break;
+                
+            default:
+                self.labelMarqueeText.text=object[@"News"];
+                break;
+        }
+        
+        self.labelMarqueeText.textColor=[UIColor whiteColor];
+        [ self.labelMarqueeText sizeToFit];
+        
+        labelMarquee = [[DVOMarqueeView alloc] initWithFrame:CGRectMake(0, self.tabBarController.tabBar.frame.origin.y -35, CGRectGetWidth(self.view.bounds), 30)];
+        labelMarquee.viewToScroll =  self.labelMarqueeText;
+        CMVGradientForNews *gradient=[[CMVGradientForNews alloc] initWithFrame:CGRectMake(0, self.tabBarController.tabBar.frame.origin.y -35, CGRectGetWidth(self.view.bounds), 30)];
+        self.labelMarquee=labelMarquee;
+        [self.view addSubview:labelMarquee];
+        [self.view addSubview:gradient];
+        
+        [labelMarquee beginScrolling];
+        
+    }];
     
 }
 
 -(void)refreshLabelMarquee {
     self.labelMarqueeText.text=@"";
-    AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
-    
-    [[dynamoDBObjectMapper load:[News class] hashKey:@"1" rangeKey:nil]
-     continueWithBlock:^id(AWSTask *task) {
-         if (task.error) {
-             NSLog(@"The request failed. Error: [%@]", task.error);
-         }
-         if (task.exception) {
-             NSLog(@"The request failed. Exception: [%@]", task.exception);
-         }
-         if (task.result) {
-             
-             News *item = task.result;
-             switch ([CMVLocalize myDeviceLocaleIs]) {
-                 case IT :
-                     self.labelMarqueeText.text=item.NewsIT;
-                     break;
-                 case DE :
-                     self.labelMarqueeText.text=item.NewsDE;
-                     break;
-                 case FR :
-                     self.labelMarqueeText.text=item.NewsFR;
-                     break;
-                 case ES :
-                     self.labelMarqueeText.text=item.NewsES;
-                     break;
-                 case RU  :
-                     self.labelMarqueeText.text=item.NewsRU;
-                     break;
-                 case ZH:
-                     self.labelMarqueeText.text=item.NewsZH;
-                     break;
-                     
-                 default:
-                     self.labelMarqueeText.text=item.News;
-                     break;
-             }
-             
-             [self.labelMarqueeText sizeToFit];
-             self.labelMarquee.viewToScroll =  self.labelMarqueeText;
-         }
-         return nil;
-     }];
+    PFQuery *query = [PFQuery queryWithClassName:@"News"];
+    [query setCachePolicy:kPFCachePolicyNetworkOnly];
+    if (![[UIApplication sharedApplication].delegate performSelector:@selector(isParseReachable)]) {
+        [query setCachePolicy:kPFCachePolicyCacheThenNetwork];
+    }
+    [query getObjectInBackgroundWithId:@"PGGDgYmTik" block:^(PFObject *object, NSError *error) {
+        
+        switch ([CMVLocalize myDeviceLocaleIs]) {
+            case IT :
+                
+                self.labelMarqueeText.text=object[@"NewsIT"];
+                break;
+            case DE :
+                self.labelMarqueeText.text=object[@"NewsDE"];
+                break;
+            case FR :
+                self.labelMarqueeText.text=object[@"NewsFR"];
+                break;
+            case ES :
+                self.labelMarqueeText.text=object[@"NewsES"];
+                break;
+            case RU  :
+                self.labelMarqueeText.text=object[@"NewsRU"];
+                break;
+            case ZH:
+                self.labelMarqueeText.text=object[@"NewsZH"];
+                break;
+                
+            default:
+                self.labelMarqueeText.text=object[@"News"];
+                
+                break;
+        }
+        [self.labelMarqueeText sizeToFit];
+        self.labelMarquee.viewToScroll =  self.labelMarqueeText;
+    }];
 }
 
 -(void)viewWillAppear:(BOOL)animated {

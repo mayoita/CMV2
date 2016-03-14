@@ -74,7 +74,7 @@
     
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:@"Menu"];
-    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+    [tracker send:[[GAIDictionaryBuilder createAppView] build]];
 
 }
 -(void)checkLogIn {

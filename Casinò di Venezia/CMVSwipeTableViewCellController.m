@@ -170,8 +170,8 @@
     
     NSDate *now = [NSDate date];
 
-  
-    for (Events *event in _events)
+    //for (PFObject *event in _events)
+        for (Events *event in _events)
     {
         // Reduce event start date to date components (year, month, day)
         NSDate *dateRepresentingThisDay = [self dateAtBeginningOfDayForDate:event.StartDate];
@@ -381,13 +381,11 @@
     CMVAllEvents *detailViewManager = (CMVAllEvents *)self.splitViewController.delegate;
     
     CMVSwipeTableViewCell *cell = (CMVSwipeTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-   
-    
+    [self configureDetailItemForRow:indexPath viewController:self.eventDelegate withCell:cell];
     
     if (iPHONE) {
-        CMVEventViewController *eventClass=[storyboard instantiateViewControllerWithIdentifier:@"EventViewControlleriPhone"];
-        [self configureDetailItemForRow:indexPath viewController:eventClass withCell:cell];
-        [self presentViewController:eventClass animated:YES completion:nil];
+        
+        [self presentViewController:self.eventDelegate animated:YES completion:nil];
         
     } else {
         CMVEventViewController *presentingViewController=  [storyboard instantiateViewControllerWithIdentifier:@"EventDetails"];
@@ -395,7 +393,7 @@
         [self configureDetailItemForRow:indexPath viewController:presentingViewController withCell:cell];
         
         
-        detailViewManager.detailViewController = presentingViewController;
+        detailViewManager.detailViewController = self.eventDelegate;
     }
 }
 
@@ -406,11 +404,10 @@
         NSArray *eventsOnThisDay = [self.sections objectForKey:dateRepresentingThisDay];
         Events *selectedEvent=[eventsOnThisDay objectAtIndex:indexPath.row];
        // Events *selectedEvent = [_events objectAtIndex:row];
-        [viewController selectedEvent:selectedEvent];
-//        if (_eventDelegate) {
-//            [_eventDelegate selectedEvent:selectedEvent];
-//            _eventDelegate.cell=cell;
-//        }
+        if (_eventDelegate) {
+            [_eventDelegate selectedEvent:selectedEvent];
+            _eventDelegate.cell=cell;
+        }
     }
 }
 

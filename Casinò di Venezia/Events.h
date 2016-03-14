@@ -8,7 +8,6 @@
 
 #import <AWSDynamoDB/AWSDynamoDB.h>
 #import <UIKit/UIKit.h>
-#import "KIImagePager.h"
 
 
 @interface Events : AWSDynamoDBObjectModel<AWSDynamoDBModeling>
@@ -45,6 +44,5 @@
 @property (nonatomic, strong) NSString *office;
 @property (nonatomic, strong) NSString *URL;
 @property (nonatomic, strong)UITableView *theTableView;
-@property (nonatomic, strong) KIImagePager *imK;
 
 @end

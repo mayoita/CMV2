@@ -173,7 +173,7 @@ MKRoute *routeDetails;
     }
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:value];
-    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+    [tracker send:[[GAIDictionaryBuilder createAppView] build]];
     [self drawDirections];
     [self setZoomRect];
     
@@ -488,7 +488,7 @@ BOOL HTShouldUseMetricSystemForDistance()
     }
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:value];
-    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+    [tracker send:[[GAIDictionaryBuilder createAppView] build]];
     [self drawDirections];
     [self setZoomRect];
 }

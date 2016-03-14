@@ -10,12 +10,14 @@
 
 #import "CMVPokerHourSlitViewController.h"
 #import "CMVSharedClass.h"
-#import <Parse/Parse.h>
+
 
 #import "CMVAppDelegate.h"
 #import "CMVEventKitShared.h"
 #import "CMVConstants.h"
 #import "CMVLocalize.h"
+#import <AWSDynamoDB/AWSDynamoDB.h>
+#import "Poker.h"
 
 #define ROW_HEIGHT 204
 #define cellIdentifier @"CustomCell"
@@ -160,10 +162,10 @@
    // NSDate *endDate = [self dateByAddingYears:1 toDate:startDate];
     
     
-    for (PFObject *event in _tournament)
+    for (Poker *event in _tournament)
     {
         // Reduce event start date to date components (year, month, day)
-        NSDate *dateRepresentingThisDay = [self dateAtBeginningOfDayForDate:event[@"StartDate"]];
+        NSDate *dateRepresentingThisDay = [self dateAtBeginningOfDayForDate:event.StartDate];
         
         // If we don't yet have an array to hold the events for this day, create one
         NSMutableArray *eventsOnThisDay = [self.sections objectForKey:dateRepresentingThisDay];
@@ -259,29 +261,32 @@
 }
 
 -(void)loadStorage {
-    PFQuery *query = [PFQuery queryWithClassName:PARSE_CLASS_NAME];
-    // If no objects are loaded in memory, we look to the cache first to fill the table
-    // and then subsequently do a query against the network. https://parse.com/docs/ios_guide#queries-caching/iOS
-    //BOOL isInCache = [query hasCachedResult];
-    //query.cachePolicy = kPFCachePolicyCacheElseNetwork;
-    [query setCachePolicy:kPFCachePolicyNetworkOnly];
-    if (![[UIApplication sharedApplication].delegate performSelector:@selector(isParseReachable)]) {
-        [query setCachePolicy:kPFCachePolicyCacheThenNetwork];
-    }
+    AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
     
-    if (storage.count == 0) {
-        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-            if (!error) {
-                
-                storage = objects.mutableCopy;
-                [self setOffice];
-                
-            } else {
-                // Log details of the failure
-                NSLog(@"Error: %@ %@", error, [error userInfo]);
-            }
-        }];
-    }
+    //DynamoScan
+    AWSDynamoDBScanExpression *scanExpression = [AWSDynamoDBScanExpression new];
+    scanExpression.limit = @20;
+    storage = [[NSMutableArray alloc] initWithCapacity:20];
+    
+    [[dynamoDBObjectMapper scan:[Poker class]
+                     expression:scanExpression]
+     continueWithBlock:^id(AWSTask *task) {
+         if (task.error) {
+             NSLog(@"The request failed. Error: [%@]", task.error);
+         }
+         if (task.exception) {
+             NSLog(@"The request failed. Exception: [%@]", task.exception);
+         }
+         if (task.result) {
+             AWSDynamoDBPaginatedOutput *paginatedOutput = task.result;
+             for (Poker *event in paginatedOutput.items) {
+                 
+                 [storage addObject:event];
+                 
+             }
+         }
+         return nil;
+     }];
     
 }
 
@@ -342,23 +347,22 @@
     }
     
    
-    PFObject *event=[eventsOnThisDay objectAtIndex:indexPath.row];
-    
-   // PFObject *event=self.tournament[indexPath.row];
+    Poker *event=[eventsOnThisDay objectAtIndex:indexPath.row];
+
 
     //Show default image
-    PFFile *imageFile=event[@"TournamentImage"];
-    if (([imageFile isKindOfClass:[NSNull class]]) || (imageFile == nil)) {
+   // UIImage *imageFile=event.TournamentImage;
+  //  if (([imageFile isKindOfClass:[NSNull class]]) || (imageFile == nil)) {
         cell.picture.image = [UIImage imageNamed:@"PokerCellBackground.png"];
     
          
-    } else {
-        [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+   // } else {
+    //    [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
             
-            cell.picture.image=[UIImage imageWithData:data];
-            cell.snapshoot = [self captureView:cell];
-        }    ];
-    }
+      //      cell.picture.image=[UIImage imageWithData:data];
+        //    cell.snapshoot = [self captureView:cell];
+       // }    ];
+   // }
     cell.readDescriptionS.hidden=YES;
     cell.dateForPoker.hidden = NO;
     cell.dateForPoker.layer.shadowOpacity = 0.5;
@@ -377,13 +381,13 @@
 
     cell.delegate = self;
     //Settings for iPAD sharing even
-    cell.eventName.text = [event objectForKey:@"TournamentName"];
-    cell.eventURL = [event objectForKey:@"TournamentURL"];
-    cell.startDate =[event objectForKey:@"StartDate"];
-    cell.endDate =[event objectForKey:@"EndDate"];
-    cell.dateForPoker.text = [self formatStartEndDate:[event objectForKey:@"StartDate"] andEnd:[event objectForKey:@"EndDate"]];
+    cell.eventName.text = event.TournamentName;
+    cell.eventURL = event.TournamentURL;
+    cell.startDate =event.StartDate;
+    cell.endDate =event.EndDate;
+    cell.dateForPoker.text = [self formatStartEndDate:event.StartDate andEnd:event.EndDate];
   
-    cell.eventDescription.text=event[@"TournamentDescription"];
+    cell.eventDescription.text=event.TournamentDescription;
     
     return cell;
 }

@@ -17,6 +17,7 @@
 #import "AWSConfiguration.h"
 #import "AWSFacebookSignInProvider.h"
 
+
 NSString *const AWSIdentityManagerDidSignInNotification = @"com.amazonaws.AWSIdentityManager.AWSIdentityManagerDidSignInNotification";
 NSString *const AWSIdentityManagerDidSignOutNotification = @"com.amazonaws.AWSIdentityManager.AWSIdentityManagerDidSignOutNotification";
 

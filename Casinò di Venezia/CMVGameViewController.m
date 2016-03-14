@@ -16,6 +16,9 @@
 
 #import "FXImageView.h"
 #import "CMVSharedClass.h"
+#import "Events.h"
+#import <AWSS3/AWSS3.h>
+#import "AWSConfiguration.h"
 
 
 
@@ -168,7 +171,7 @@ int Office;
     }
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:value];
-    [tracker send:[[GAIDictionaryBuilder createAppView] build]];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
 
     
     _imagePager.pageControl.currentPageIndicatorTintColor = [UIColor lightGrayColor];
@@ -202,7 +205,7 @@ int Office;
 - (NSArray *) arrayWithImages
 {
     NSMutableArray *photo=[[NSMutableArray alloc] init];
-    for (int i = 0; i < [self.dataForGame[DataForSlot][0] count]; i++) {
+    for (int i = 0; i < [(NSArray *)self.dataForGame[DataForSlot][0] count]; i++) {
         UIImage *photoName=[UIImage imageNamed:self.dataForGame[DataForSlot][0][i][Name]];
         [photo addObject:photoName];
     }
@@ -355,6 +358,7 @@ int Office;
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSUInteger)index reusingView:(UIView *)view
 {
     //create new view if no view is available for recycling
+    Events *eventItem =(Events *)[slotsEvents objectAtIndex:index];
     if (view == nil)
     {
         float size;
@@ -371,15 +375,59 @@ int Office;
         imageView.reflectionGap = 10.0f;
         imageView.shadowOffset = CGSizeMake(0.0f, 2.0f);
         imageView.shadowBlur = 5.0f;
-        imageView.textForImage=[[slotsEvents objectAtIndex:index] objectForKey:@"StartDate"];
+        
+        imageView.textForImage=(NSString *)eventItem.StartDate;
         view = imageView;
     }
     
     //show placeholder
     ((FXImageView *)view).processedImage = [UIImage imageNamed:@"placeholder.png"];
-    UIImage *imageFile=[[slotsEvents objectAtIndex:index] objectForKey:@"ImageEvent1"];
-   
-    [(FXImageView *)view setImage:imageFile];
+    
+    AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
+    AWSS3TransferManagerDownloadRequest *downloadRequest = [AWSS3TransferManagerDownloadRequest new];
+    
+    NSString *downloadingFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:eventItem.ImageEvent1];
+    NSURL *downloadingFileURL = [NSURL fileURLWithPath:downloadingFilePath];
+    downloadRequest.bucket = S3BucketName;
+    downloadRequest.key = eventItem.ImageEvent1;
+    
+    downloadRequest.downloadingFileURL = downloadingFileURL;
+    if ([UIImage imageWithContentsOfFile:downloadingFilePath] == nil) {
+        // Download the file.
+        [[transferManager download:downloadRequest] continueWithExecutor:[AWSExecutor mainThreadExecutor]
+                                                               withBlock:^id(AWSTask *task) {
+                                                                   if (task.error){
+                                                                       if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
+                                                                           switch (task.error.code) {
+                                                                               case AWSS3TransferManagerErrorCancelled:
+                                                                               case AWSS3TransferManagerErrorPaused:
+                                                                                   break;
+                                                                                   
+                                                                               default:
+                                                                                   NSLog(@"Error: %@", task.error);
+                                                                                   break;
+                                                                           }
+                                                                       } else {
+                                                                           // Unknown error.
+                                                                           NSLog(@"Error: %@", task.error);
+                                                                       }
+                                                                   }
+                                                                   
+                                                                   if (task.result) {
+                                                                       
+                                                                       dispatch_async(dispatch_get_main_queue(), ^{
+                                                                           
+                                                                           [self.carousel reloadData];
+                                                                       });
+                                                                       
+                                                                   }
+                                                                   return nil;
+                                                               }];
+    } else {
+        UIImage *imageFile= [UIImage imageNamed:@"Test.png"];
+        
+        [(FXImageView *)view setImage:imageFile];
+    }
     
     return view;
 }

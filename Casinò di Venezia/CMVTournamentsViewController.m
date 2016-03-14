@@ -76,9 +76,6 @@
     } else {
         self.collectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"BK_date_PokerHouriPAD.png"]];
         self.closeButton.hidden = YES;
-        //        [self calculateItemSizeForiPad];
-        //        if (_navigationPaneBarButtonItem)
-        //            [self.toolbar setItems:[NSArray arrayWithObject:self.navigationPaneBarButtonItem] animated:NO];
     }
     
     [self.flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
@@ -90,7 +87,7 @@
 
 -(void)viewWillLayoutSubviews {
  
-    if ([_dataSourceItemsWithRules[@"Type"]  isEqual: @"C"]) {
+    if ([_dataSourceItemsWithRules.Type  isEqual: @"C"]) {
         if (iPHONE) {
             self.verticalSpaceForTextView.constant = 60;
         } else {
@@ -119,7 +116,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    if ([_dataSourceItemsWithRules[@"Type"]  isEqual: @"P"]) {
+    if ([_dataSourceItemsWithRules.Type  isEqual: @"P"]) {
     if (self.dataSourceItems ) {
         NSIndexPath *myIndex = [NSIndexPath indexPathForItem:0 inSection:0];
         [self.collectionView scrollToItemAtIndexPath:myIndex atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
@@ -133,17 +130,17 @@
     }
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:value];
-    [tracker send:[[GAIDictionaryBuilder createAppView] build]];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
   
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     self.currentItem = 0;
-    self.titleView.text=_dataSourceItemsWithRules[@"TournamentName"];
+    self.titleView.text=_dataSourceItemsWithRules.TournamentName;
     [self colorArrowAndlabel];
     self.arrowDx.hidden = YES;
     self.textView.attributedText= [self formatTextForPokerHour];
-    if ([_dataSourceItemsWithRules[@"Type"]  isEqual: @"P"]) {
+    if ([_dataSourceItemsWithRules.Type  isEqual: @"P"]) {
         [self.tableView reloadData];
     }
     
@@ -203,18 +200,11 @@
     NSDictionary *firstAttributes = [self firstAttributes];
     NSDictionary *secondAttributes = [self secondAttributes];
     
-    NSArray *arrayText =_dataSourceItemsWithRules[@"TournamentsRules"];
+     NSArray *arrayText =_dataSourceItemsWithRules.TournamentsRules;
+    
 
-//    if (_dataSourceItems[0][2]  ) {
-//        NSString *textNote=[NSString stringWithFormat:@"%@%@",_dataSourceItems[self.currentItem][indexForNotes],@"\n\n"];;
-//        NSInteger _stringLengthText=[textNote length];
-//        NSMutableAttributedString *attMyString2=[[NSMutableAttributedString alloc] initWithString:textNote];
-//        [attMyString2 setAttributes:secondAttributes range:NSMakeRange(0, _stringLengthText)];
-//        
-//        [formattedText appendAttributedString:attMyString2];
-//    }
     //Append Tournament Descriptions
-    NSString *textDescription=[NSString stringWithFormat:@"%@%@",_dataSourceItemsWithRules[@"TournamentDescription"],@"\n\n"];;
+    NSString *textDescription=[NSString stringWithFormat:@"%@%@",_dataSourceItemsWithRules.TournamentDescription,@"\n\n"];;
     NSInteger _stringLengthText=[textDescription length];
     NSMutableAttributedString *attMyString3=[[NSMutableAttributedString alloc] initWithString:textDescription];
     [attMyString3 setAttributes:secondAttributes range:NSMakeRange(0, _stringLengthText)];
@@ -222,6 +212,8 @@
     [formattedText appendAttributedString:attMyString3];
     
     //Append Tournament rules
+    
+    
     for (int i=0; i < arrayText.count; i++) {
         
         NSString *title=[NSString stringWithFormat:@"%@%@",arrayText[i][0],@"\n"]; 
@@ -246,7 +238,7 @@
     return size.height;
 }
 
--(void)selectedTournament:(PFObject *)newTournament {
+-(void)selectedTournament:(Tournament *)newTournament {
 
     self.currentItem = 0;
     if (_currentOffice == CN) {
@@ -260,9 +252,9 @@
         _dataSourceItemsWithRules = newTournament;
         [self.collectionView reloadData];
 
-        _dataSourceItems=[self preparePokerData:_dataSourceItemsWithRules[@"TournamentEvent"]];
+        _dataSourceItems=[self preparePokerData:_dataSourceItemsWithRules.TournamentEvent];
         
-        self.titleView.text=_dataSourceItemsWithRules[@"TournamentName"];
+        self.titleView.text=_dataSourceItemsWithRules.TournamentName;
 
     }
 }
@@ -310,7 +302,7 @@
 #pragma Collection view delegate
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     //if ([[self.dataSourceItemsWithRules lastObject] count] == 1) {
-     if ([_dataSourceItemsWithRules[@"Type"]  isEqual: @"P"]) {
+     if ([_dataSourceItemsWithRules.Type  isEqual: @"P"]) {
         if (self.dataSourceItems.count == 1) {
             self.arrowSx.hidden=YES;
         } else {
@@ -396,7 +388,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if ([_dataSourceItemsWithRules[@"Type"]  isEqual: @"C"]) {
+    if ([_dataSourceItemsWithRules.Type  isEqual: @"C"]) {
         return 0;
     } else {
         NSArray *items;

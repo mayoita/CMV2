@@ -158,7 +158,7 @@
     NSDictionary *firstAttributes = [self firstAttributes];
     NSDictionary *secondAttributes = [self secondAttributes];
     
-    NSArray *arrayText =_dataSourceItemsWithRules[@"TournamentsRules"];
+    NSArray *arrayText =_dataSourceItemsWithRules.TournamentRules;
     NSArray *obj;
     for (obj in _dataSourceItems[indice][2]) {
         if (![obj[8]  isEqual: @""]) {
@@ -306,7 +306,7 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     self.currentItem = 0;
-     self.nomeTorneo.text=_dataSourceItemsWithRules[@"TournamentName"];
+     self.nomeTorneo.text=_dataSourceItemsWithRules.TournamentName;
      [self colorArrowAndlabel];
     self.arrowDx.hidden = YES;
     self.noteGenerali.attributedText= [self formatTextForPokerHour:0];
@@ -345,7 +345,7 @@
 
 -(void)updateDataCollectionAndTable {
     self.currentItem = 0;
-    self.nomeTorneo.text=_dataSourceItemsWithRules[@"TournamentName"];
+    self.nomeTorneo.text=_dataSourceItemsWithRules.TournamentName;
     [self colorArrowAndlabel];
     self.arrowDx.hidden = YES;
     self.noteGenerali.attributedText= [self formatTextForPokerHour:0];
@@ -393,7 +393,7 @@
     return check;
 }
 
--(void)selectedTournament:(PFObject *)newTournament office:(int)currentOffice {
+-(void)selectedTournament:(Poker *)newTournament office:(int)currentOffice {
     self.currentItem = 0;
     if (currentOffice == CN) {
         self.currentOffice = CN;
@@ -406,7 +406,7 @@
         _dataSourceItemsWithRules = newTournament;
         [self.collectionView reloadData];
         //_dataSourceItems=_dataSourceItemsWithRules[@"TournamentEvent"];
-        _dataSourceItems=[self preparePokerData:_dataSourceItemsWithRules[@"PokerData"]];
+        _dataSourceItems=[self preparePokerData:_dataSourceItemsWithRules.PokerData];
     }
     if (iPAD) {
         [self updateDataCollectionAndTable];

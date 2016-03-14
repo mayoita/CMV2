@@ -230,6 +230,14 @@
 		22AF4A5118D0B3F1003D0652 /* CMVTextForGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 22AF4A5018D0B3F1003D0652 /* CMVTextForGame.m */; };
 		22AF513B18E174BC006568DA /* CMVMenuRestaurantViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22AF513A18E174BC006568DA /* CMVMenuRestaurantViewController.m */; };
 		22AF513E18E1835F006568DA /* CMVMenuRestaurant.m in Sources */ = {isa = PBXBuildFile; fileRef = 22AF513D18E1835F006568DA /* CMVMenuRestaurant.m */; };
+		22B0C73C1C917FF800E7A3F5 /* 640x408default.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 22B0C73B1C917FF800E7A3F5 /* 640x408default.jpg */; };
+		22B0C73F1C919F7500E7A3F5 /* Poker.m in Sources */ = {isa = PBXBuildFile; fileRef = 22B0C73E1C919F7500E7A3F5 /* Poker.m */; };
+		22B0C7421C92FE0200E7A3F5 /* Tournament.m in Sources */ = {isa = PBXBuildFile; fileRef = 22B0C7411C92FE0200E7A3F5 /* Tournament.m */; };
+		22B0C7451C93176C00E7A3F5 /* Jackpot.m in Sources */ = {isa = PBXBuildFile; fileRef = 22B0C7441C93176C00E7A3F5 /* Jackpot.m */; };
+		22B0C7481C931CEC00E7A3F5 /* EventAds.m in Sources */ = {isa = PBXBuildFile; fileRef = 22B0C7471C931CEC00E7A3F5 /* EventAds.m */; };
+		22B0C74B1C93282A00E7A3F5 /* Festivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 22B0C74A1C93282A00E7A3F5 /* Festivity.m */; };
+		22B0C74E1C932E8A00E7A3F5 /* News.m in Sources */ = {isa = PBXBuildFile; fileRef = 22B0C74D1C932E8A00E7A3F5 /* News.m */; };
+		22B0C7511C93311A00E7A3F5 /* CMVSharedClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 22B0C7501C93311A00E7A3F5 /* CMVSharedClass.m */; };
 		22B5224E1978334700457B71 /* Gotham-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 22B5224D1978334700457B71 /* Gotham-Medium.ttf */; };
 		22B544DC1852195800986E18 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22B544DB1852195800986E18 /* Social.framework */; };
 		22B6D6DD1987C13E005D264F /* Banco.png in Resources */ = {isa = PBXBuildFile; fileRef = 22B6D6D11987C13E005D264F /* Banco.png */; };
@@ -365,7 +373,6 @@
 		22DF1D8818F6F5EE00E533FE /* 37x-Checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 22DF1D8618F6F5EE00E533FE /* 37x-Checkmark@2x.png */; };
 		22EF4F821892AD1100A8FD79 /* CMVCupButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 22EF4F811892AD1100A8FD79 /* CMVCupButton.m */; };
 		22EF4F881892C1F000A8FD79 /* CMVVPC.m in Sources */ = {isa = PBXBuildFile; fileRef = 22EF4F871892C1F000A8FD79 /* CMVVPC.m */; };
-		22EFDDEA18B3B80900EFB441 /* CMVSharedClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 22EFDDE918B3B80900EFB441 /* CMVSharedClass.m */; };
 		22F4B2A119C98858003D1D26 /* BK_date_PokerHour_gradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 22F4B2A019C98858003D1D26 /* BK_date_PokerHour_gradient.png */; };
 		22F6319F1BB5587100C1BD5A /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22F6319D1BB5587100C1BD5A /* FBSDKCoreKit.framework */; };
 		22F631A01BB5587100C1BD5A /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22F6319E1BB5587100C1BD5A /* FBSDKShareKit.framework */; };
@@ -913,6 +920,21 @@
 		22AF513A18E174BC006568DA /* CMVMenuRestaurantViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMVMenuRestaurantViewController.m; sourceTree = "<group>"; };
 		22AF513C18E1835F006568DA /* CMVMenuRestaurant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMVMenuRestaurant.h; sourceTree = "<group>"; };
 		22AF513D18E1835F006568DA /* CMVMenuRestaurant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMVMenuRestaurant.m; sourceTree = "<group>"; };
+		22B0C73B1C917FF800E7A3F5 /* 640x408default.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 640x408default.jpg; sourceTree = "<group>"; };
+		22B0C73D1C919F7500E7A3F5 /* Poker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Poker.h; sourceTree = "<group>"; };
+		22B0C73E1C919F7500E7A3F5 /* Poker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Poker.m; sourceTree = "<group>"; };
+		22B0C7401C92FE0200E7A3F5 /* Tournament.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tournament.h; sourceTree = "<group>"; };
+		22B0C7411C92FE0200E7A3F5 /* Tournament.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tournament.m; sourceTree = "<group>"; };
+		22B0C7431C93176C00E7A3F5 /* Jackpot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Jackpot.h; sourceTree = "<group>"; };
+		22B0C7441C93176C00E7A3F5 /* Jackpot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Jackpot.m; sourceTree = "<group>"; };
+		22B0C7461C931CEC00E7A3F5 /* EventAds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventAds.h; sourceTree = "<group>"; };
+		22B0C7471C931CEC00E7A3F5 /* EventAds.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventAds.m; sourceTree = "<group>"; };
+		22B0C7491C93282900E7A3F5 /* Festivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Festivity.h; sourceTree = "<group>"; };
+		22B0C74A1C93282A00E7A3F5 /* Festivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Festivity.m; sourceTree = "<group>"; };
+		22B0C74C1C932E8A00E7A3F5 /* News.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = News.h; sourceTree = "<group>"; };
+		22B0C74D1C932E8A00E7A3F5 /* News.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = News.m; sourceTree = "<group>"; };
+		22B0C74F1C93311A00E7A3F5 /* CMVSharedClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMVSharedClass.h; sourceTree = "<group>"; };
+		22B0C7501C93311A00E7A3F5 /* CMVSharedClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMVSharedClass.m; sourceTree = "<group>"; };
 		22B5224D1978334700457B71 /* Gotham-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Medium.ttf"; sourceTree = "<group>"; };
 		22B544DB1852195800986E18 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		22B6D6D11987C13E005D264F /* Banco.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Banco.png; sourceTree = "<group>"; };
@@ -1120,8 +1142,6 @@
 		22EF4F811892AD1100A8FD79 /* CMVCupButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMVCupButton.m; sourceTree = "<group>"; };
 		22EF4F861892C1F000A8FD79 /* CMVVPC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMVVPC.h; sourceTree = "<group>"; };
 		22EF4F871892C1F000A8FD79 /* CMVVPC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMVVPC.m; sourceTree = "<group>"; };
-		22EFDDE818B3B80900EFB441 /* CMVSharedClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMVSharedClass.h; sourceTree = "<group>"; };
-		22EFDDE918B3B80900EFB441 /* CMVSharedClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMVSharedClass.m; sourceTree = "<group>"; };
 		22F4B2A019C98858003D1D26 /* BK_date_PokerHour_gradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BK_date_PokerHour_gradient.png; sourceTree = "<group>"; };
 		22F6319D1BB5587100C1BD5A /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		22F6319E1BB5587100C1BD5A /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
@@ -1566,6 +1586,7 @@
 		22921AEB197568240058927F /* Design */ = {
 			isa = PBXGroup;
 			children = (
+				22B0C73B1C917FF800E7A3F5 /* 640x408default.jpg */,
 				226032BA1B2F573D0003E72B /* FrecciaHome.png */,
 				226032CA1B30A9370003E72B /* HomeLike.png */,
 				226FEB2F1AA5D991006B6998 /* 22789.otf */,
@@ -1733,6 +1754,20 @@
 		22A3498D1844BE2300D2B543 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				22B0C74F1C93311A00E7A3F5 /* CMVSharedClass.h */,
+				22B0C7501C93311A00E7A3F5 /* CMVSharedClass.m */,
+				22B0C74C1C932E8A00E7A3F5 /* News.h */,
+				22B0C74D1C932E8A00E7A3F5 /* News.m */,
+				22B0C7491C93282900E7A3F5 /* Festivity.h */,
+				22B0C74A1C93282A00E7A3F5 /* Festivity.m */,
+				22B0C7461C931CEC00E7A3F5 /* EventAds.h */,
+				22B0C7471C931CEC00E7A3F5 /* EventAds.m */,
+				22B0C7431C93176C00E7A3F5 /* Jackpot.h */,
+				22B0C7441C93176C00E7A3F5 /* Jackpot.m */,
+				22B0C7401C92FE0200E7A3F5 /* Tournament.h */,
+				22B0C7411C92FE0200E7A3F5 /* Tournament.m */,
+				22B0C73D1C919F7500E7A3F5 /* Poker.h */,
+				22B0C73E1C919F7500E7A3F5 /* Poker.m */,
 				22DA543A1C7DC88C0075B06F /* Events.h */,
 				22DA543B1C7DC88C0075B06F /* Events.m */,
 				2206F2091A31ED690032681D /* Category */,
@@ -1762,8 +1797,6 @@
 				221FAF3F18C5EB1200B77952 /* MyLogInViewController.m */,
 				221FAF4018C5EB1200B77952 /* MySignUpViewController.h */,
 				221FAF4118C5EB1200B77952 /* MySignUpViewController.m */,
-				22EFDDE818B3B80900EFB441 /* CMVSharedClass.h */,
-				22EFDDE918B3B80900EFB441 /* CMVSharedClass.m */,
 				22AF513918E174BC006568DA /* CMVMenuRestaurantViewController.h */,
 				22AF513A18E174BC006568DA /* CMVMenuRestaurantViewController.m */,
 				2287F4AB18E1E09500FC379B /* CMVPushNews.h */,
@@ -2593,6 +2626,7 @@
 				227DA9B919E81A3F00AFFFD0 /* RestaurantBG.png in Resources */,
 				22AAC68119893BEB0035BBB4 /* TimetableCell.png in Resources */,
 				22B6D6E01987C13E005D264F /* Chemin.png in Resources */,
+				22B0C73C1C917FF800E7A3F5 /* 640x408default.jpg in Resources */,
 				2297E5CD18CF733600072806 /* R_CN_1.png in Resources */,
 				2230D881181FE1150060C568 /* dotted-pattern.png in Resources */,
 				22CA949A1A79127D007ABFCF /* BK_game.png in Resources */,
@@ -2659,8 +2693,10 @@
 			files = (
 				2294A97D18C4E42000A9F51C /* CMVBackgroundSwipeCell.m in Sources */,
 				22A8AE3519CC7BF30070A65C /* ECSlidingViewController.m in Sources */,
+				22B0C74E1C932E8A00E7A3F5 /* News.m in Sources */,
 				22CF4469181A9AD70062FC38 /* main.m in Sources */,
 				2203C51119D5985C003739B4 /* MZFormSheetBackgroundWindow.m in Sources */,
+				22B0C7421C92FE0200E7A3F5 /* Tournament.m in Sources */,
 				CD429E2B18C3A1AB0015ED37 /* UIScrollView+CRScrollIndicator.m in Sources */,
 				22540A40191912F50082D643 /* CMVEventKitShared.m in Sources */,
 				22A8AE4219CC81B90070A65C /* METransitionsViewController.m in Sources */,
@@ -2684,6 +2720,7 @@
 				22679413191BB34F00D0A447 /* CMVPermissionRequestPush.m in Sources */,
 				22AF513B18E174BC006568DA /* CMVMenuRestaurantViewController.m in Sources */,
 				2297E5BF18CE027A00072806 /* CMVLock.m in Sources */,
+				22B0C7451C93176C00E7A3F5 /* Jackpot.m in Sources */,
 				22540A371918EF5E0082D643 /* CMVPermissionForPushNotification.m in Sources */,
 				22D00E0118EC07DF0047DD31 /* CMVFreeBoat.m in Sources */,
 				22C09450183FBD08008F4E77 /* UIImage+ImageWithUIView.m in Sources */,
@@ -2692,6 +2729,7 @@
 				2277E5C21934E07100CD9EAF /* CKSubscribeAlertView.m in Sources */,
 				2292A1DE190E716900BD2792 /* DVOMarqueeView.m in Sources */,
 				22F6FCF119D1A161003AB1D1 /* CMVTabBarControllerNew.m in Sources */,
+				22B0C7511C93311A00E7A3F5 /* CMVSharedClass.m in Sources */,
 				2297E5B318CDDB4200072806 /* CMVMail.m in Sources */,
 				223FEB0C18D9B1A50053EC1B /* UIImage+FX.m in Sources */,
 				2297E5D218D074C700072806 /* MZModalViewController.m in Sources */,
@@ -2745,6 +2783,7 @@
 				22C104131A52EE7A002675A4 /* JPSThumbnailAnnotationView.m in Sources */,
 				22B730401834FAAC005FDBED /* CMVShowImage.m in Sources */,
 				22AF513E18E1835F006568DA /* CMVMenuRestaurant.m in Sources */,
+				22B0C74B1C93282A00E7A3F5 /* Festivity.m in Sources */,
 				226D4C3919EE8CCB00B46D4F /* CMVFreeBoatTitle.m in Sources */,
 				22C6E87719114E400025BC62 /* CMVAlertForCalendar.m in Sources */,
 				2203C51419D5985C003739B4 /* MZTransition.m in Sources */,
@@ -2770,6 +2809,7 @@
 				CD95CE3C1860FB9A00879213 /* KIImagePager.m in Sources */,
 				2297E5B618CDE35400072806 /* CMVLike.m in Sources */,
 				22BADAA01885538E000318E3 /* CMVTournamentsViewZoomController.m in Sources */,
+				22B0C7481C931CEC00E7A3F5 /* EventAds.m in Sources */,
 				2203C51C19D59876003739B4 /* NSInvocation+Copy.m in Sources */,
 				220D11101848E8FC0075A172 /* UIImage+ImageEffects.m in Sources */,
 				229CEC111855FCAE009B7120 /* CMVSwipeViewController.m in Sources */,
@@ -2781,7 +2821,6 @@
 				22CF44A7181A9B3E0062FC38 /* CMVMainTabbarController.m in Sources */,
 				CDB0C9E0185CD53200BF2700 /* CMVFesturesFlowLayout.m in Sources */,
 				22095A421A2372DA00E54315 /* CMVArrowChat.m in Sources */,
-				22EFDDEA18B3B80900EFB441 /* CMVSharedClass.m in Sources */,
 				22F6FCEE19D17067003AB1D1 /* MEMenuViewController.m in Sources */,
 				2292A1DA190E64FB00BD2792 /* CMVSetUpCurrency.m in Sources */,
 				2246E9C61A24D8280083D12E /* TTScrollViewWrapper.m in Sources */,
@@ -2822,6 +2861,7 @@
 				229DACD21827F2C00053EB2E /* CMVEventViewController.m in Sources */,
 				22A8AE4019CC81B90070A65C /* MESettingsViewController.m in Sources */,
 				226FEB2A1AA5D4B6006B6998 /* CMVDiciottoPiu.m in Sources */,
+				22B0C73F1C919F7500E7A3F5 /* Poker.m in Sources */,
 				22A8AE3219CC7BF30070A65C /* ECSlidingAnimationController.m in Sources */,
 				2297E5C518CF23DB00072806 /* CMVSharedPropertyButton.m in Sources */,
 				22DA542C1C7DC5CC0075B06F /* AWSIdentityManager.m in Sources */,

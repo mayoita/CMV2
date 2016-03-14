@@ -8,13 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "CMVCloseButton.h"
-#import <Parse/Parse.h>
 #import "CMVSwipeTableViewCell.h"
 #import "CMVPokerHourCellNew.h"
 #import "CMVArrowSx.h"
 #import "CMVArrow.h"
 #import "CMVPokerHourSlitViewController.h"
 #import "CMVSharedButton.h"
+#import "Poker.h"
 
 @interface CMVPokerHourMain : UIViewController <UITableViewDataSource, UITableViewDelegate,SubstitutableDetailViewControllerPoker,AAShareBubblesDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -29,7 +29,7 @@
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 
 @property (strong,nonatomic)NSArray *dataSourceItems;
-@property (strong,nonatomic)PFObject *dataSourceItemsWithRules;
+@property (strong,nonatomic)Poker *dataSourceItemsWithRules;
 
 
 @property (weak, nonatomic) IBOutlet CMVSharedButton *shareButton;
@@ -37,6 +37,6 @@
 
 @property(strong,nonatomic)CMVSwipeTableViewCell *cell;
 
--(void)selectedTournament:(PFObject *)newTournament office:(int)currentOffice;
+-(void)selectedTournament:(Poker *)newTournament office:(int)currentOffice;
 
 @end

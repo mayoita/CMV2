@@ -217,30 +217,6 @@ static NSString *const kGaPropertyId = @"UA-42477250-3";
     }
 }
 -(void)loadStorage {
-//    PFQuery *query = [PFQuery queryWithClassName:PARSE_CLASS_NAME];
-//    // If no objects are loaded in memory, we look to the cache first to fill the table
-//    // and then subsequently do a query against the network. https://parse.com/docs/ios_guide#queries-caching/iOS
-//    //BOOL isInCache = [query hasCachedResult];
-//    //query.cachePolicy = kPFCachePolicyCacheElseNetwork;
-//    [query setCachePolicy:kPFCachePolicyNetworkOnly];
-//    if (![[UIApplication sharedApplication].delegate performSelector:@selector(isParseReachable)]) {
-//        [query setCachePolicy:kPFCachePolicyCacheThenNetwork];
-//    }
-//    
-//    if (self.storage.count == 0) {
-//        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-//            if (!error) {
-//                
-//                self.storage = objects.mutableCopy;
-//             
-//                
-//            } else {
-//                // Log details of the failure
-//                NSLog(@"Error: %@ %@", error, [error userInfo]);
-//            }
-//        }];
-//    }
-    //
     //DynamoDB
     AWSDynamoDBObjectMapper *dynamoDBObjectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
     
@@ -261,8 +237,7 @@ static NSString *const kGaPropertyId = @"UA-42477250-3";
          if (task.result) {
              AWSDynamoDBPaginatedOutput *paginatedOutput = task.result;
              for (Events *event in paginatedOutput.items) {
-                 //Do something with book.
-    //             event.ImageName = event.ImageName;
+        
                  [self.storage addObject:event];
                  
              }

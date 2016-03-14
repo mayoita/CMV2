@@ -32,7 +32,7 @@
     BOOL _loaded;
 
 }
-
+@property (nonatomic, strong) NSMutableArray *collection;
 @end
 
 @implementation KIImagePager
@@ -74,12 +74,14 @@
 #pragma mark - General
 - (void) initialize
 {
+    self.collection = [NSMutableArray new];
     self.clipsToBounds = YES;
     [self initializeScrollView];
     [self initializePageControl];
     if(!_indicatorDisabled) {
         [self initalizeImageCounter];
     }
+   
     [self loadData];
     //_loaded = YES;
 }
@@ -140,6 +142,7 @@
     [self addSubview:_scrollView];
 }
 
+
 - (void) loadData
 {
     if (!_loaded) {
@@ -147,11 +150,9 @@
     NSArray *aImageUrls = (NSArray *)[_dataSource arrayWithImages];
     _activityIndicators = [NSMutableDictionary new];
     
-    //AWS S3
-    AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
-    AWSS3TransferManagerDownloadRequest *downloadRequest = [AWSS3TransferManagerDownloadRequest new];
     
-    downloadRequest.bucket = S3BucketName;
+    
+   
     
     if([aImageUrls count] > 0) {
         [_scrollView setContentSize:CGSizeMake(_scrollView.frame.size.width * [aImageUrls count],
@@ -180,11 +181,15 @@
                 [_activityIndicators setObject:activityIndicator forKey:[NSString stringWithFormat:@"%d", i]];
                 
                 //AWS asynchronously retrieve image
+                //AWS S3
+                AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
+                AWSS3TransferManagerDownloadRequest *downloadRequest = [AWSS3TransferManagerDownloadRequest new];
+                 downloadRequest.bucket = S3BucketName;
                 NSString *downloadingFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[aImageUrls objectAtIndex:i]];
                 NSURL *downloadingFileURL = [NSURL fileURLWithPath:downloadingFilePath];
               
                 downloadRequest.key = [aImageUrls objectAtIndex:i];
-                //downloadRequest.downloadingFileURL = downloadingFileURL;
+                if ([UIImage imageWithContentsOfFile:downloadingFilePath] == nil) {
                 [[transferManager download:downloadRequest] continueWithExecutor:[AWSExecutor mainThreadExecutor]
                                                                        withBlock:^id(AWSTask *task) {
                                                                            if (task.error){
@@ -208,6 +213,10 @@
                                                                                AWSS3TransferManagerDownloadOutput *downloadOutput = task.result;
                                                                               
                                                                                dispatch_async(dispatch_get_main_queue(), ^{
+                                                                                   NSData *imageData=[NSData dataWithContentsOfURL:downloadingFileURL];
+                                                                                 
+                                                                                   //[imageView setImage: [UIImage imageWithData:w]];
+                                                                                  
                                                                                    [imageView setImage: [UIImage imageWithContentsOfFile:downloadingFilePath]];
                                                                                    // Stop and Remove Activity Indicator
                                                                                                            UIActivityIndicatorView *indicatorView = (UIActivityIndicatorView *)[_activityIndicators objectForKey:[NSString stringWithFormat:@"%d", i]];
@@ -215,11 +224,22 @@
                                                                                                               [indicatorView stopAnimating];
                                                                                                                [_activityIndicators removeObjectForKey:[NSString stringWithFormat:@"%d", i]];
                                                                                                            }
+                                                                                       
+                                                                                   
                                                                                });
                                                                                
                                                                            }
                                                                            return nil;
                                                                        }];
+                } else {
+                    [imageView setImage: [UIImage imageWithContentsOfFile:downloadingFilePath]];
+                    // Stop and Remove Activity Indicator
+                    UIActivityIndicatorView *indicatorView = (UIActivityIndicatorView *)[_activityIndicators objectForKey:[NSString stringWithFormat:@"%d", i]];
+                    if (indicatorView) {
+                        [indicatorView stopAnimating];
+                        [_activityIndicators removeObjectForKey:[NSString stringWithFormat:@"%d", i]];
+                    }
+                }
                 
                 // Asynchronously retrieve image
 //                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{

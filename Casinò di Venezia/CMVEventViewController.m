@@ -27,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageHeightConstrait;
 
 
+
 @end
 
 @implementation CMVEventViewController {
@@ -56,6 +57,8 @@
     self.eventDate.font=GOTHAM_BOOK(16);
     self.eventDate.textColor=[UIColor whiteColor];
     self.closeButton.color=[UIColor redColor];
+    
+   
    
 }
 
@@ -66,9 +69,6 @@
     [self refreshUI];
 }
 
--(void)viewDidDisappear:(BOOL)animated {
-  //  self.imagePager=nil;
-}
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
@@ -81,7 +81,7 @@
     }
     id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:value];
-    [tracker send:[[GAIDictionaryBuilder createAppView] build]];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
 
 }
 
@@ -105,16 +105,17 @@
 
 - (NSArray *) arrayWithImages
 {
+
     NSMutableArray *photo=[[NSMutableArray alloc] init];
-    UIImage *imageFile1=_event.ImageEvent1;
-    UIImage *imageFile2=_event.ImageEvent2;
-    UIImage *imageFile3=_event.ImageEvent3;
+    NSString *imageFile1=_event.ImageEvent1;
+    NSString *imageFile2=_event.ImageEvent2;
+    NSString *imageFile3=_event.ImageEvent3;
     UIImage *defaultImage=_event.ImageName;
     self.imagePager.indicatorDisabled = TRUE;
     
     //self.imagePager.hidden = YES;
     self.whiteView.hidden = YES;
-    if ([_event.ImageEvent1 isKindOfClass:[UIImage class]]) {
+    if (![imageFile1 isEqualToString:@"NULL"]) {
         self.imagePager.indicatorDisabled = FALSE;
         //self.imagePager.hidden =NO;
          self.whiteView.hidden = NO;
@@ -122,10 +123,10 @@
     } else {
         [photo addObject:defaultImage];
     }
-    if ([_event.ImageEvent2 isKindOfClass:[UIImage class]]) {
+    if (![imageFile1 isEqualToString:@"NULL"]) {
         [photo addObject:imageFile2];
     }
-    if ([_event.ImageEvent3 isKindOfClass:[UIImage class]]) {
+    if (![imageFile3 isEqualToString:@"NULL"]) {
         [photo addObject:imageFile3];
     }
 
@@ -145,10 +146,7 @@
     //Make sure you're not setting up the same event.
     if (_event != event) {
         _event = event;
-       
-        
-        //Update the UI to reflect the new event on the iPad.
-        //[self refreshUI];
+
     }
 }
 
@@ -168,8 +166,6 @@
     _eventDescription.textColor=[UIColor whiteColor];
     _eventDate.text = [formatter stringFromDate:_event.StartDate];
     [self calculateHeight];
-    self.event.imK = self.imagePager;
-    [self.imagePager reloadData];
 }
 
 -(void)localizeMemo:(Events *)event {

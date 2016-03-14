@@ -11,7 +11,6 @@
 
 @interface CMVSharedClass : NSObject
 
--(NSMutableArray *)retrieveObjects:(NSString *)className eventType:(int)eventChar office:(int)officeLocation tableView:(UITableView *)myTableView;
 -(NSMutableArray *)retrieveSlotsEvents:(NSString *)className eventType:(int)eventChar carousel:(iCarousel *) myCaraousel;
 
 + (NSArray *)eventTypeStrings;

@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-//#import <Parse/Parse.h>
+
 
 @interface CMVShowImage : UIViewController <UIScrollViewDelegate>
-//@property (strong, nonatomic) PFObject *object;
+
 @property(nonatomic, strong) UIImage *largePhoto;
 -(IBAction)done:(id) sender;
 

@@ -1,69 +1,34 @@
 //
-//  Events.m
-//  MySampleApp
+//  EventAds.m
+//  Casinò di Venezia
 //
-//  Created by Massimo Moro on 19/02/16.
-//  Copyright © 2016 Amazon. All rights reserved.
+//  Created by Massimo Moro on 11/03/16.
+//  Copyright © 2016 Casinò di Venezia SPA. All rights reserved.
 //
 
-#import "Events.h"
+#import "EventAds.h"
 #import "AWSConfiguration.h"
 #import <AWSS3/AWSS3.h>
-@interface Events() {
-    BOOL imUno;
-    BOOL imDue;
-    BOOL imTre;
-}
-@property (nonatomic, strong) NSDateFormatter *dateFormatter;
-@end
 
-@implementation Events
-
--(id)init{
-    self = [super init];
-    if (self) {
-        self.dateFormatter = [NSDateFormatter new];
-        self.dateFormatter.dateStyle = kCFDateFormatterShortStyle;
-        self.dateFormatter.timeStyle = kCFDateFormatterShortStyle;
-        self.dateFormatter.locale = [NSLocale currentLocale];
-        [self.dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-        [self.dateFormatter setDateFormat:@"dd/MM/yyyy"];
-
-    }
-    return self;
-}
-
-
+@implementation EventAds
 + (NSString *)dynamoDBTableName {
-    return @"Events";
+    return @"EventAds";
 }
 
 + (NSString *)hashKeyAttribute {
-    return @"Name";
+    return @"id";
 }
-+ (NSString *)rangeKeyAttribute {
-    return @"StartDate";
-}
-
--(NSDate *)StartDate {
-    
-    return [self.dateFormatter dateFromString:_StartDate];;
-}
--(NSDate *)EndDate {
-    
-    return [self.dateFormatter dateFromString:_EndDate];;
-}
--(UIImage *)ImageName {
-    if (_ImageName) {
-      
+-(UIImage *)image {
+    if (_image) {
+        
         
         AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
         AWSS3TransferManagerDownloadRequest *downloadRequest = [AWSS3TransferManagerDownloadRequest new];
         
-        NSString *downloadingFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:_ImageName];
+        NSString *downloadingFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:_image];
         NSURL *downloadingFileURL = [NSURL fileURLWithPath:downloadingFilePath];
         downloadRequest.bucket = S3BucketName;
-        downloadRequest.key = _ImageName;
+        downloadRequest.key = _image;
         
         downloadRequest.downloadingFileURL = downloadingFileURL;
         if ([UIImage imageWithContentsOfFile:downloadingFilePath] == nil) {
@@ -90,7 +55,7 @@
                                                                        if (task.result) {
                                                                            
                                                                            dispatch_async(dispatch_get_main_queue(), ^{
-                                                                               [self.theTableView reloadData];
+                                                                               self.imageView.image = [UIImage imageWithContentsOfFile:downloadingFilePath];
                                                                            });
                                                                            
                                                                        }
@@ -101,12 +66,11 @@
         if ([UIImage imageWithContentsOfFile:downloadingFilePath] == nil) {
             return [UIImage imageNamed:@"640x408default.jpg"];
         } else {
-        return [UIImage imageWithContentsOfFile:downloadingFilePath];
+            return [UIImage imageWithContentsOfFile:downloadingFilePath];
         }
-   
+        
     }
-
+    
     return [UIImage imageNamed:@"640x408default.jpg"];
 }
-
 @end

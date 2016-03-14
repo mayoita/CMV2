@@ -24,9 +24,9 @@
 @property (nonatomic, strong) NSString *DescriptionRU;
 @property (nonatomic, strong) NSString *DescriptionZH;
 @property (nonatomic, strong) NSString *eventType;
-@property (nonatomic, strong) UIImage *ImageEvent1;
-@property (nonatomic, strong) UIImage *ImageEvent2;
-@property (nonatomic, strong) UIImage *ImageEvent3;
+@property (nonatomic, strong) NSString *ImageEvent1;
+@property (nonatomic, strong) NSString *ImageEvent2;
+@property (nonatomic, strong) NSString *ImageEvent3;
 @property (nonatomic, strong) UIImage *ImageName;
 @property (nonatomic, strong) NSString *isSlotEvents;
 @property (nonatomic, strong) NSString *memo;

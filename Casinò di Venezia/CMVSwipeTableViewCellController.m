@@ -170,8 +170,8 @@
     
     NSDate *now = [NSDate date];
 
-    //for (PFObject *event in _events)
-        for (Events *event in _events)
+  
+    for (Events *event in _events)
     {
         // Reduce event start date to date components (year, month, day)
         NSDate *dateRepresentingThisDay = [self dateAtBeginningOfDayForDate:event.StartDate];
@@ -381,13 +381,13 @@
     CMVAllEvents *detailViewManager = (CMVAllEvents *)self.splitViewController.delegate;
     
     CMVSwipeTableViewCell *cell = (CMVSwipeTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-    //qui
-    self.eventDelegate =[storyboard instantiateViewControllerWithIdentifier:@"EventViewControlleriPhone"];
-    [self configureDetailItemForRow:indexPath viewController:self.eventDelegate withCell:cell];
+   
+    
     
     if (iPHONE) {
-        
-        [self presentViewController:self.eventDelegate animated:YES completion:nil];
+        CMVEventViewController *eventClass=[storyboard instantiateViewControllerWithIdentifier:@"EventViewControlleriPhone"];
+        [self configureDetailItemForRow:indexPath viewController:eventClass withCell:cell];
+        [self presentViewController:eventClass animated:YES completion:nil];
         
     } else {
         CMVEventViewController *presentingViewController=  [storyboard instantiateViewControllerWithIdentifier:@"EventDetails"];
@@ -395,7 +395,7 @@
         [self configureDetailItemForRow:indexPath viewController:presentingViewController withCell:cell];
         
         
-        detailViewManager.detailViewController = self.eventDelegate;
+        detailViewManager.detailViewController = presentingViewController;
     }
 }
 
@@ -406,10 +406,11 @@
         NSArray *eventsOnThisDay = [self.sections objectForKey:dateRepresentingThisDay];
         Events *selectedEvent=[eventsOnThisDay objectAtIndex:indexPath.row];
        // Events *selectedEvent = [_events objectAtIndex:row];
-        if (_eventDelegate) {
-            [_eventDelegate selectedEvent:selectedEvent];
-            _eventDelegate.cell=cell;
-        }
+        [viewController selectedEvent:selectedEvent];
+//        if (_eventDelegate) {
+//            [_eventDelegate selectedEvent:selectedEvent];
+//            _eventDelegate.cell=cell;
+//        }
     }
 }
 

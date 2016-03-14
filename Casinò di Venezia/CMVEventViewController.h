@@ -12,7 +12,7 @@
 #import "AAShareBubbles.h"
 #import "CMVSwipeTableViewCell.h"
 #import "CMVGameSplitViewController.h"
-#import <Parse/Parse.h>
+
 #import "CMVCloseButton.h"
 
 
